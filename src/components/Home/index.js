@@ -16,6 +16,8 @@ import {
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
 const Home = () => {
+
+  
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View
@@ -35,7 +37,7 @@ const Home = () => {
             }}>
             <Image
               source={require('../../assets/images/power.png')}
-              style={styles.image}
+              style={styles.imageOFF}
             />
             <Text style={styles.text}>Text here</Text>
           </TouchableOpacity>
@@ -66,7 +68,7 @@ const Home = () => {
           <View style={styles.view1}>
             <Image
               source={require('../../assets/images/power.png')}
-              style={styles.image}
+              style={styles.imageOn}
             />
             <Text style={styles.text}>Text here</Text>
           </View>
@@ -152,8 +154,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  image: {
-    tintColor: '#21835a',
+  imageOn: {
+    tintColor: 'red',
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain',
+  },
+  imageOFF: {
+    tintColor: 'green',
     width: '100%',
     height: '100%',
     resizeMode: 'contain',

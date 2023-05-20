@@ -5,13 +5,15 @@ import {
 	StyleSheet,
 	Text,
 	View,
-	Switch
+	Switch,
+	TouchableOpacity
 } from 'react-native';
 import { useEffect } from 'react';
 
 
 export default function App() {
-
+	const [on_OffStatus,setOn_OffStatus]=useState(true);
+	console.log("Hasnat Testing");
 	useEffect(() => {
 		const call = async () => {
 			try {
@@ -21,6 +23,7 @@ export default function App() {
 			catch (e) {
 				console.log(e);
 			}
+
 
 		}
 		call();
@@ -58,22 +61,32 @@ export default function App() {
 		console.log(state);
 		update(state);
 
-	}
+	}	
 
 	return (
-		<View style={styles.container}>
-			<Text style={{ color: Enable ? "red" : "green" }}>
-				<Text style={{ fontSize: 30 }}>Turn Light On Off</Text>
-			</Text>
-			<Switch
-				trackColor={{ false: "#43f746", true: "#63dff2" }}
-				thumbColor={Enable ? "#faf68c" : "#e243f7"}
-				onValueChange={toggle}
-				value={Enable}
-				style={{ transform: [{ scaleX: 3 }, { scaleY: 3 }], marginTop: 30 }}
-			/>
+		<View style={{flex: 1, backgroundColor: '#1c744a'}}>
+		  <View
+        style={{
+          flex: 1.2,
+          backgroundColor: '#FFFFFF',
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          alignItems: 'center',
+          padding: 20,
+		  marginTop:335
+        }}>
+			<TouchableOpacity style={[styles.circularButton,on_OffStatus?styles.elevationOff:styles.elevationOn]} onPress={()=>{setOn_OffStatus((prev)=>!prev)}} activeOpacity={0.9}>
+			  
+				<Text style={{fontWeight:"bold"}}>{on_OffStatus?"ON":"OFF"}</Text>
+			
+			  {/* <View style={[styles.line, { transform: [{ rotate: '45deg' }] }]}></View>
+			  <View style={[styles.line, { transform: [{ rotate: '90deg' }] }]}></View>
+			  <View style={[styles.line, { transform: [{ rotate: '135deg' }] }]}></View> */}
+			</TouchableOpacity>
+			</View>
 		</View>
-	);
+		  );
+	
 }
 
 const styles = StyleSheet.create({
@@ -82,4 +95,33 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
+	circularButton: {
+		width: 170,
+		height: 170,
+		borderRadius: 100,
+		backgroundColor: 'white',
+		marginTop:90,
+
+		justifyContent: 'center',
+		alignItems: 'center',
+	
+		
+	  },
+	  elevationOn: {
+		elevation: 20,
+		shadowColor: "red",
+		
+	  },
+	  elevationOff: {
+		elevation: 20,
+		shadowColor: "green",
+		
+	  },
+	  line: {
+		position: 'absolute',
+		width: 20,
+		height: 2,
+		borderRadius: 1,
+		backgroundColor: '#000000',
+	  },
 });

@@ -65,7 +65,7 @@ const DashBoard = ({navigation, route}) => {
           justifyContent: 'space-between',
           alignItems: 'center',
         }}>
-        <LinearGradient colors={['#2cab82', '#21835a', '#156236']}>
+        <LinearGradient colors={['#1c744a', '#21835a', '#156236']}>
           <View
             style={{
               flex: 1,
@@ -80,8 +80,10 @@ const DashBoard = ({navigation, route}) => {
                 width: responsiveWidth(70),
                 height: responsiveHeight(45),
                 resizeMode: 'contain',
-                marginVertical: responsiveHeight(6),
+                marginVertical: responsiveHeight(-3),
                 // position: 'absolute',
+                marginHorizontal:"auto",
+                alignSelf:'center'
               }}
             />
 
@@ -162,7 +164,7 @@ const DashBoard = ({navigation, route}) => {
                 }}>
                 <View style={styles.rowView}>
                   <TouchableOpacity
-                    onPress={() => navigation.navigate('Home')}
+                    onPress={() => navigation.navigate('WeatherScreen')}
                     style={styles.card}>
                     <View style={styles.cardContainer}>
                       <Image

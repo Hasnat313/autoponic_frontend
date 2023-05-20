@@ -4,14 +4,14 @@ import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import WeatherCard from '../../component/WeatherCard';
 
-const WeatherScreen = () => {
+const WeatherScreen = ({navigation}) => {
   const data = [1, 3, 4, 5, 6, 67, 7, 8];
   return (
-    <View style={{flex: 1, backgroundColor: '#2152d2'}}>
+    <View style={{flex: 1, backgroundColor: '#1c744a'}}>
       <View
         style={{
           flex: 1,
-          backgroundColor: '#2152d2',
+          backgroundColor: '#1c744a',
           alignItems: 'center',
           justifyContent: 'center',
         }}>
@@ -34,19 +34,44 @@ const WeatherScreen = () => {
           {' '}
           Partly Cloudy
         </Text>
-        <TouchableOpacity
+        <View
           style={{
-            borderColor: '#fff',
-            borderWidth: 1,
-            borderRadius: 20,
-            height: 32,
-            width: 130,
-            marginVertical: 10,
-            alignItems: 'center',
-            justifyContent: 'center',
+            display: 'flex',
+            flexDirection: 'row',
+            marginBottom: -10,
+            marginTop: 10,
           }}>
-          <Text style={{color: '#fff'}}>See Details</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              borderColor: '#fff',
+              borderWidth: 1,
+              borderRadius: 20,
+              height: 32,
+              width: 130,
+              marginVertical: 10,
+              marginEnd: 15,
+              // marginBottom:10,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            onPress={() => navigation.navigate('Chart')}>
+            <Text style={{color: '#fff'}}>Control Device</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              borderColor: '#fff',
+              borderWidth: 1,
+              borderRadius: 20,
+              height: 32,
+              width: 130,
+              marginVertical: 10,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            onPress={() => navigation.navigate('Chart')}>
+            <Text style={{color: '#fff'}}>See Chart</Text>
+          </TouchableOpacity>
+        </View>
       </View>
       <View
         style={{
@@ -62,7 +87,7 @@ const WeatherScreen = () => {
             width: '20%',
             height: 5,
             borderRadius: 25,
-            backgroundColor: '#CCCCCC',
+            backgroundColor: '#fff',
             marginBottom: 20,
           }}></View>
         <FlatList
