@@ -110,12 +110,14 @@ const Login = ({navigation, route}) => {
               alignItems: 'center',
             }}>
             <Image
-              source={require('../../assets/images/plant.png')}
+              source={require('../../assets/images/mainscreen/flowers-gd5216de8a_1280.png')}
               style={{
-                width: responsiveWidth(70),
+                width: responsiveWidth(65),
                 height: responsiveHeight(45),
                 resizeMode: 'contain',
                 marginVertical: responsiveHeight(6),
+                alignItems: 'center',
+                justifyContent: 'center'
                 // position: 'absolute',
               }}
             />

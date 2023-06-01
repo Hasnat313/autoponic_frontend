@@ -9,7 +9,6 @@ import Signup from './src/components/Signup';
 import ForgotPassword from './src/components/ForgotPassword';
 import VerifyAccount from './src/components/VerifyAccount';
 import UpdatePassword from './src/components/UpdatePassword';
-import DashBoard from './src/components/DashBoardScreen';
 import Button from './src/components/Button';
 import WeatherScreen from './src/components/WeatherScreen';
 import {store} from './src/redux/store';
@@ -90,11 +89,11 @@ function App() {
             component={WeatherScreen}
             options={{headerShown: false}}
           />
-          <Stack.Screen
+          {/* <Stack.Screen
             name="Home"
             component={Home}
             options={{headerShown: false}}
-          />
+          />  */}
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
