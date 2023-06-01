@@ -34,7 +34,7 @@ function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Chart">
+        <Stack.Navigator initialRouteName="Dashboard">
           <Stack.Screen
             name="Login"
             component={Login}

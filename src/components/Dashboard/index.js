@@ -27,7 +27,10 @@ import {appImages} from '../../assets/utilities';
 import {MyButton} from '../../component/MyButton';
 import Eye from 'react-native-vector-icons/Ionicons';
 import {useFormik} from 'formik';
-import {login} from '../../api';
+import {getStatus, login} from '../../api';
+import {useDispatch} from 'react-redux';
+import {fetchStatus} from '../../redux/slices/device1';
+import {fetchStatus2} from '../../redux/slices/device2';
 
 const DashBoard = ({navigation, route}) => {
   const [myfocus, setMyfocus] = useState('');
@@ -36,6 +39,9 @@ const DashBoard = ({navigation, route}) => {
   const refpassword = useRef();
   const [temperature, setTemperature] = useState('');
   const [humidity, setHumidity] = useState('');
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
     console.log('Hasnat');
     socket.emit('data', 'I am sending data');
@@ -47,7 +53,9 @@ const DashBoard = ({navigation, route}) => {
       console.log(data);
       setHumidity(data);
     });
-  });
+    dispatch(fetchStatus());
+    dispatch(fetchStatus2());
+  }, []);
   return (
     <SafeAreaView style={STYLES.container}>
       <StatusBar
@@ -82,8 +90,8 @@ const DashBoard = ({navigation, route}) => {
                 resizeMode: 'contain',
                 marginVertical: responsiveHeight(-3),
                 // position: 'absolute',
-                marginHorizontal:"auto",
-                alignSelf:'center'
+                marginHorizontal: 'auto',
+                alignSelf: 'center',
               }}
             />
 
@@ -164,7 +172,11 @@ const DashBoard = ({navigation, route}) => {
                 }}>
                 <View style={styles.rowView}>
                   <TouchableOpacity
-                    onPress={() => navigation.navigate('WeatherScreen')}
+                    onPress={() =>
+                      navigation.navigate('WeatherScreen', {
+                        data: 'device1',
+                      })
+                    }
                     style={styles.card}>
                     <View style={styles.cardContainer}>
                       <Image
@@ -192,7 +204,13 @@ const DashBoard = ({navigation, route}) => {
                       </View>
                     </View>
                   </TouchableOpacity>
-                  <View style={styles.card}>
+                  <TouchableOpacity
+                    style={styles.card}
+                    onPress={() =>
+                      navigation.navigate('WeatherScreen', {
+                        data: 'device2',
+                      })
+                    }>
                     <View style={styles.cardContainer}>
                       <Image
                         source={appImages.plant}
@@ -218,7 +236,7 @@ const DashBoard = ({navigation, route}) => {
                         </TouchableOpacity>
                       </View>
                     </View>
-                  </View>
+                  </TouchableOpacity>
                 </View>
 
                 {/*  */}

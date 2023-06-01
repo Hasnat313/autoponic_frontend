@@ -1,8 +1,10 @@
-import { configureStore } from '@reduxjs/toolkit';
-import device1Reducers from './slices/device1';
+import {configureStore} from '@reduxjs/toolkit';
+import device1 from './slices/device1';
+import device2 from './slices/device2';
 
 export const store = configureStore({
   reducer: {
-    device1: device1Reducers
-  }
+    device2,
+    device1,
+  },
 });

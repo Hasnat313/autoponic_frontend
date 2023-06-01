@@ -4,7 +4,8 @@ import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import WeatherCard from '../../component/WeatherCard';
 
-const WeatherScreen = ({navigation}) => {
+const WeatherScreen = ({navigation, route}) => {
+  console.log(route.params.data);
   const data = [1, 3, 4, 5, 6, 67, 7, 8];
   return (
     <View style={{flex: 1, backgroundColor: '#1c744a'}}>
@@ -54,7 +55,11 @@ const WeatherScreen = ({navigation}) => {
               alignItems: 'center',
               justifyContent: 'center',
             }}
-            onPress={() => navigation.navigate('Chart')}>
+            onPress={() =>
+              navigation.navigate('Button', {
+                paramKey: route.params.data,
+              })
+            }>
             <Text style={{color: '#fff'}}>Control Device</Text>
           </TouchableOpacity>
           <TouchableOpacity

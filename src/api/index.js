@@ -13,8 +13,27 @@ const config = {
     'Content-Type': 'application/json',
   },
 };
-
+// API.interceptors.response.use(
+//   response => response,
+//   error => {
+//     if (error.response) {
+//       console.log('API Error:', error.response.data);
+//     } else {
+//       console.dir('API Error:', error.message);
+//     }
+//     return Promise.reject(error);
+//   },
+// );
 export const register = authFormData =>
   API.post('user/register', authFormData, config);
 export const login = authFormData =>
   API.post('user/login', authFormData, config);
+export const getStatus = () =>
+  API.get('devices/getDeviceById/6472d6332133a2af8e811236', config);
+export const getStatus2 = () =>
+  API.get('devices/getDeviceById/6472d6422133a2af8e811239', config);
+
+export const updateStatus = body =>
+  API.put('devices/changeStatus/6472d6332133a2af8e811236', body, config);
+export const updateStatus2 = body =>
+  API.put('devices/changeStatus/6472d6422133a2af8e811239', body, config);
