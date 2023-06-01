@@ -1,3 +1,4 @@
+
 import {
   SafeAreaView,
   StatusBar,
@@ -21,6 +22,10 @@ import {
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
 import LinearGradient from 'react-native-linear-gradient';
+
+import Icon from 'react-native-vector-icons/FontAwesome';
+import EntypoIcon from 'react-native-vector-icons/Entypo';
+import {Button} from '../Button/index'
 
 import {fontFamily} from '../../constants/fonts';
 import {appImages} from '../../assets/utilities';
@@ -75,7 +80,7 @@ const DashBoard = ({navigation, route}) => {
               // alignItems: 'center',
             }}>
             <Image
-              source={require('../../assets/images/plant.png')}
+              source={require('../../assets/images/mainscreen/flowers-gd5216de8a_1280.png')}
               style={{
                 width: responsiveWidth(70),
                 height: responsiveHeight(45),
@@ -125,7 +130,7 @@ const DashBoard = ({navigation, route}) => {
                       resizeMode: 'contain',
                     }}
                   />
-                  <Text style={{color: '#000', fontSize: 14}}>Some text</Text>
+                  <Text style={{color: '#000', fontSize: 14 , fontWeight: '900' , color: '#1c744a'}}>UIIT Hydroponic Automation Unit</Text>
                 </View>
                 <View
                   style={{
@@ -167,167 +172,162 @@ const DashBoard = ({navigation, route}) => {
                     onPress={() => navigation.navigate('WeatherScreen')}
                     style={styles.card}>
                     <View style={styles.cardContainer}>
-                      <Image
-                        source={appImages.plant}
-                        style={{
+                    <Icon name="thermometer" size={50} color="#1c744a" 
+                    style={{
                           width: 40,
                           height: 50,
-                          resizeMode: 'contain',
-                        }}
-                      />
+                          marginLeft:'10%'
+                        }} />
                       <View style={styles.cardRowView}>
                         <View>
-                          <Text style={{color: '#000', fontSize: 13}}>
+                          <Text style={{color: '#000', fontSize:responsiveFontSize(1.8) , fontWeight:'500' }}>
                             Temperature
                           </Text>
-                          <Text style={{color: '#1c744a'}}>
+                          <Text style={{color: '#1c744a' , fontSize: responsiveFontSize(2.5)}}>
                             {temperature} °C
                           </Text>
                         </View>
-                        <TouchableOpacity style={styles.cardbtn}>
-                          <Text style={{color: '#ffff', fontSize: 10}}>
-                            btn text
+                        <TouchableOpacity  onPress={() => navigation.navigate('Button')}
+                         style={styles.cardbtn}>
+                          <Text style={{color: '#ffff', fontSize: 11}}>
+                            Manage
                           </Text>
                         </TouchableOpacity>
                       </View>
                     </View>
                   </TouchableOpacity>
-                  <View style={styles.card}>
+                  <TouchableOpacity
+                   style={styles.card}>
                     <View style={styles.cardContainer}>
-                      <Image
-                        source={appImages.plant}
-                        style={{
-                          width: 40,
-                          height: 50,
-                          resizeMode: 'contain',
-                        }}
-                      />
+                      <EntypoIcon name= 'drop'  size={53} color="#1b95e0" />
+             
                       <View style={styles.cardRowView}>
-                        <View>
-                          <Text style={{color: '#000', fontSize: 13}}>
+                        <View style={{marginRight: responsiveWidth(2)}}>
+                          <Text style={{color: '#000',  fontSize:responsiveFontSize(1.8) , fontWeight:'500'}}>
                             Humidity
                           </Text>
-                          <Text style={{color: '#1c744a'}}>
+                          <Text style={{color: '#1c744a' , fontSize: responsiveFontSize(2.5)}}>
                             {humidity} gm/3
                           </Text>
                         </View>
                         <TouchableOpacity style={styles.cardbtn}>
-                          <Text style={{color: '#ffff', fontSize: 10}}>
-                            btn text
+                          <Text style={{color: '#ffff', fontSize: 11}}>
+                            Manage
                           </Text>
                         </TouchableOpacity>
                       </View>
                     </View>
-                  </View>
+                  </TouchableOpacity>
                 </View>
 
                 {/*  */}
-
                 <View style={styles.rowView}>
-                  <View style={styles.card}>
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate('WeatherScreen')}
+                    style={styles.card}>
                     <View style={styles.cardContainer}>
-                      <Image
-                        source={appImages.plant}
-                        style={{
+                    <Icon name="thermometer" size={50} color="#1c744a" 
+                    style={{
                           width: 40,
                           height: 50,
-                          resizeMode: 'contain',
-                        }}
-                      />
+                          marginLeft:'10%'
+                        }} />
                       <View style={styles.cardRowView}>
                         <View>
-                          <Text style={{color: '#000', fontSize: 13}}>
+                          <Text style={{color: '#000', fontSize:responsiveFontSize(1.8) , fontWeight:'500' }}>
                             Temperature
                           </Text>
-                          <Text style={{color: '#1c744a'}}>25 *C</Text>
+                          <Text style={{color: '#1c744a' , fontSize: responsiveFontSize(2.5)}}>
+                            {temperature} °C
+                          </Text>
                         </View>
-                        <TouchableOpacity style={styles.cardbtn}>
-                          <Text style={{color: '#ffff', fontSize: 10}}>
-                            btn text
+                        <TouchableOpacity  onPress={() => navigation.navigate('Button')}
+                         style={styles.cardbtn}>
+                          <Text style={{color: '#ffff', fontSize: 11}}>
+                            Manage
                           </Text>
                         </TouchableOpacity>
                       </View>
                     </View>
-                  </View>
-                  <View style={styles.card}>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                   style={styles.card}>
                     <View style={styles.cardContainer}>
-                      <Image
-                        source={appImages.plant}
-                        style={{
-                          width: 40,
-                          height: 50,
-                          resizeMode: 'contain',
-                        }}
-                      />
+                      <EntypoIcon name= 'drop'  size={53} color="#1b95e0" />
+             
                       <View style={styles.cardRowView}>
-                        <View>
-                          <Text style={{color: '#000', fontSize: 13}}>
-                            Temperature
+                        <View style={{marginRight: responsiveWidth(2)}}>
+                          <Text style={{color: '#000',  fontSize:responsiveFontSize(1.8) , fontWeight:'500'}}>
+                            Humidity
                           </Text>
-                          <Text style={{color: '#1c744a'}}>25 *C</Text>
+                          <Text style={{color: '#1c744a' , fontSize: responsiveFontSize(2.5)}}>
+                            {humidity} gm/3
+                          </Text>
                         </View>
                         <TouchableOpacity style={styles.cardbtn}>
-                          <Text style={{color: '#ffff', fontSize: 10}}>
-                            btn text
+                          <Text style={{color: '#ffff', fontSize: 11}}>
+                            Manage
                           </Text>
                         </TouchableOpacity>
                       </View>
                     </View>
-                  </View>
+                  </TouchableOpacity>
                 </View>
+
                 {/* ---------------------- */}
                 <View style={styles.rowView}>
-                  <View style={styles.card}>
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate('WeatherScreen')}
+                    style={styles.card}>
                     <View style={styles.cardContainer}>
-                      <Image
-                        source={appImages.plant}
-                        style={{
+                    <Icon name="thermometer" size={50} color="#1c744a" 
+                    style={{
                           width: 40,
                           height: 50,
-                          resizeMode: 'contain',
-                        }}
-                      />
+                          marginLeft:'10%'
+                        }} />
                       <View style={styles.cardRowView}>
                         <View>
-                          <Text style={{color: '#000', fontSize: 13}}>
+                          <Text style={{color: '#000', fontSize:responsiveFontSize(1.8) , fontWeight:'500' }}>
                             Temperature
                           </Text>
-                          <Text style={{color: '#1c744a'}}>25 *C</Text>
+                          <Text style={{color: '#1c744a' , fontSize: responsiveFontSize(2.5)}}>
+                            {temperature} °C
+                          </Text>
                         </View>
-                        <TouchableOpacity style={styles.cardbtn}>
-                          <Text style={{color: '#ffff', fontSize: 10}}>
-                            btn text
+                        <TouchableOpacity  onPress={() => navigation.navigate('Button')}
+                         style={styles.cardbtn}>
+                          <Text style={{color: '#ffff', fontSize: 11}}>
+                            Manage
                           </Text>
                         </TouchableOpacity>
                       </View>
                     </View>
-                  </View>
-                  <View style={styles.card}>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                   style={styles.card}>
                     <View style={styles.cardContainer}>
-                      <Image
-                        source={appImages.plant}
-                        style={{
-                          width: 40,
-                          height: 50,
-                          resizeMode: 'contain',
-                        }}
-                      />
+                      <EntypoIcon name= 'drop'  size={53} color="#1b95e0" />
+             
                       <View style={styles.cardRowView}>
-                        <View>
-                          <Text style={{color: '#000', fontSize: 13}}>
-                            Temperature
+                        <View style={{marginRight: responsiveWidth(2)}}>
+                          <Text style={{color: '#000',  fontSize:responsiveFontSize(1.8) , fontWeight:'500'}}>
+                            Humidity
                           </Text>
-                          <Text style={{color: '#1c744a'}}>25 *C</Text>
+                          <Text style={{color: '#1c744a' , fontSize: responsiveFontSize(2.5)}}>
+                            {humidity} gm/3
+                          </Text>
                         </View>
                         <TouchableOpacity style={styles.cardbtn}>
-                          <Text style={{color: '#ffff', fontSize: 10}}>
-                            btn text
+                          <Text style={{color: '#ffff', fontSize: 11}}>
+                            Manage
                           </Text>
                         </TouchableOpacity>
                       </View>
                     </View>
-                  </View>
+                  </TouchableOpacity>
                 </View>
+
               </ScrollView>
             </View>
           </View>
@@ -345,12 +345,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   card: {
-    width: responsiveWidth(35),
-    height: 120,
+    width: responsiveWidth(41),
+    height: 130,
     backgroundColor: '#fff',
     borderRadius: 10,
     justifyContent: 'center',
-    padding: 5,
+    paddingTop : 10,
+    paddingBottom:10,
+    paddingHorizontal:10,
     marginBottom: 10,
   },
   cardContainer: {
@@ -367,8 +369,9 @@ const styles = StyleSheet.create({
   },
   cardbtn: {
     backgroundColor: '#1c744a',
-    paddingHorizontal: 15,
+    paddingHorizontal: 25,
     borderRadius: 15,
-    paddingVertical: 3,
+    paddingVertical: 7,
+
   },
 });

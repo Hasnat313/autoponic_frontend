@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
 import database from '@react-native-firebase/database';
+import { powerOn } from '../../assets/images/powerOn.png';
+import { Image } from 'react-native';
+import {
+	responsiveFontSize,
+	responsiveHeight,
+	responsiveScreenHeight,
+	responsiveWidth,
+  } from 'react-native-responsive-dimensions';
 const reference = database().ref('/');
 import {
 	StyleSheet,
@@ -12,7 +20,7 @@ import { useEffect } from 'react';
 
 
 export default function App() {
-	const [on_OffStatus,setOn_OffStatus]=useState(true);
+	const [on_OffStatus, setOn_OffStatus] = useState(true);
 	console.log("Hasnat Testing");
 	useEffect(() => {
 		const call = async () => {
@@ -61,32 +69,47 @@ export default function App() {
 		console.log(state);
 		update(state);
 
-	}	
+	}
 
 	return (
-		<View style={{flex: 1, backgroundColor: '#1c744a'}}>
-		  <View
-        style={{
-          flex: 1.2,
-          backgroundColor: '#FFFFFF',
-          borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,
-          alignItems: 'center',
-          padding: 20,
-		  marginTop:335
-        }}>
-			<TouchableOpacity style={[styles.circularButton,on_OffStatus?styles.elevationOff:styles.elevationOn]} onPress={()=>{setOn_OffStatus((prev)=>!prev)}} activeOpacity={0.9}>
-			  
-				<Text style={{fontWeight:"bold"}}>{on_OffStatus?"ON":"OFF"}</Text>
-			
-			  {/* <View style={[styles.line, { transform: [{ rotate: '45deg' }] }]}></View>
+		<View style={{ flex: 1, backgroundColor: '#1c744a'}}>
+			  <Image
+              source={require('../../assets/images/mainscreen/flowers-gd5216de8a_1280.png')}
+              style={{
+                width: responsiveWidth(70),
+                height: responsiveHeight(45),
+                resizeMode: 'contain',
+                alignSelf:'center'
+              }}
+            />
+			<View
+				style={{
+					flex: 1.2,
+					backgroundColor: '#FFFFFF',
+					borderTopLeftRadius: 20,
+					borderTopRightRadius: 20,
+					alignItems: 'center',
+					padding: 20,
+				}}>
+				<TouchableOpacity style={[styles.circularButton, on_OffStatus ? styles.elevationOff : styles.elevationOn]} onPress={() => { setOn_OffStatus((prev) => !prev) }} activeOpacity={0.9}>
+					<Image
+						source={ on_OffStatus ? require("../../assets/images/powerOn.png") : require("../../assets/images/powerOff.png")}
+						styles={{
+							width: 50,
+							height: 200,
+							resizeMode: 'stretch',
+						}}
+					/>
+					<Text style={{ fontWeight: "bold" }}>{on_OffStatus ? "ON" : "OFF"}</Text>
+
+					{/* <View style={[styles.line, { transform: [{ rotate: '45deg' }] }]}></View>
 			  <View style={[styles.line, { transform: [{ rotate: '90deg' }] }]}></View>
 			  <View style={[styles.line, { transform: [{ rotate: '135deg' }] }]}></View> */}
-			</TouchableOpacity>
+				</TouchableOpacity>
 			</View>
 		</View>
-		  );
-	
+	);
+
 }
 
 const styles = StyleSheet.create({
@@ -100,28 +123,27 @@ const styles = StyleSheet.create({
 		height: 170,
 		borderRadius: 100,
 		backgroundColor: 'white',
-		marginTop:90,
-
+		marginTop: 90,
 		justifyContent: 'center',
 		alignItems: 'center',
-	
-		
-	  },
-	  elevationOn: {
+
+
+	},
+	elevationOn: {
 		elevation: 20,
 		shadowColor: "red",
-		
-	  },
-	  elevationOff: {
+
+	},
+	elevationOff: {
 		elevation: 20,
 		shadowColor: "green",
-		
-	  },
-	  line: {
+
+	},
+	line: {
 		position: 'absolute',
 		width: 20,
 		height: 2,
 		borderRadius: 1,
 		backgroundColor: '#000000',
-	  },
+	},
 });

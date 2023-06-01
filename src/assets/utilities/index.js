@@ -75,6 +75,6 @@ const appImages = {
   patientfiles2: require(IMAGES_DIR + 'patientfiles2.png'),
   patientfilesfocused: require(IMAGES_DIR + 'patientfilesfocused.png'),
   downloadicon: require(IMAGES_DIR + 'downloadicon.png'),
-  plant: require(IMAGES_DIR + 'plant.png'),
+  plant: require(IMAGES_DIR + 'mainscreen/logohydroponic.png'),
 };
 export {appImages};
