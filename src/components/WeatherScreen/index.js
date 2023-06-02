@@ -5,14 +5,14 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import WeatherCard from '../../component/WeatherCard';
 
 const WeatherScreen = ({navigation, route}) => {
-  console.log(route.params.data);
+  // console.log(route.params.data);
   const data = [1, 3, 4, 5, 6, 67, 7, 8];
   return (
-    <View style={{flex: 1, backgroundColor: '#1c744a'}}>
+    <View style={{flex: 1, backgroundColor: '#8CC63E'}}>
       <View
         style={{
           flex: 1,
-          backgroundColor: '#1c744a',
+          backgroundColor: '#8CC63E',
           alignItems: 'center',
           justifyContent: 'center',
         }}>
@@ -72,6 +72,7 @@ const WeatherScreen = ({navigation, route}) => {
               marginVertical: 10,
               alignItems: 'center',
               justifyContent: 'center',
+              fontWeight : 900
             }}
             onPress={() => navigation.navigate('Chart')}>
             <Text style={{color: '#fff'}}>See Chart</Text>

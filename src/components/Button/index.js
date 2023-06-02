@@ -15,8 +15,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {changeStatus} from '../../redux/slices/device1';
 import {changeStatus2} from '../../redux/slices/device2';
 
-export default function App({route}) {
-  const dispatch = useDispatch();
+
 
 export default function App() {
 	const [on_OffStatus, setOn_OffStatus] = useState(true);

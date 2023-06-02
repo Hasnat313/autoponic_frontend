@@ -99,7 +99,6 @@ const Signup = ({navigation, route}) => {
           justifyContent: 'space-between',
           alignItems: 'center',
         }}>
-        <LinearGradient colors={['#2cab82', '#21835a', '#156236']}>
           <View
             style={{
               flex: 1,
@@ -107,9 +106,10 @@ const Signup = ({navigation, route}) => {
               height: responsiveHeight(100),
               // backgroundColor: '#1c744a',
               alignItems: 'center',
+              backgroundColor : "#8CC63E"
             }}>
             <Image
-              source={require('../../assets/images/plant.png')}
+              source={require('../../assets/images/mainscreen/flowers-gd5216de8a_1280.png')}
               style={{
                 width: responsiveWidth(70),
                 height: responsiveHeight(45),
@@ -164,7 +164,6 @@ const Signup = ({navigation, route}) => {
               </View>
             </View>
           </View>
-        </LinearGradient>
       </ScrollView>
     </SafeAreaView>
   );
@@ -181,7 +180,7 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
   btn: {
-    backgroundColor: '#54d74a',
+    backgroundColor: '#A1CE69',
     width: responsiveWidth(70),
     padding: 15,
     borderRadius: responsiveWidth(7),
@@ -189,7 +188,7 @@ const styles = StyleSheet.create({
     marginBottom: responsiveHeight(2),
   },
   btn1: {
-    borderColor: '#54d74a',
+    borderColor: '#A1CE69',
     borderWidth: 1,
     width: responsiveWidth(70),
     padding: 15,
