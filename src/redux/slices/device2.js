@@ -29,9 +29,10 @@ export const changeStatus2 = createAsyncThunk(
   'device2/changeStatus',
   async body => {
     try {
+      console.log(body);
       const result = await updateStatus2(body);
       //   console.log(JSON.stringify(result.data.status));
-      console.log(result.data.data.status);
+      console.log('hasnat is device2', result.data.data.status);
       return result.data.data.status;
     } catch (error) {
       console.log(error);

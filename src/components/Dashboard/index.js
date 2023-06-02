@@ -46,25 +46,25 @@ const DashBoard = ({navigation, route}) => {
   const [softinput, setSoftinput] = useState(false);
   const [issecure, setIssecure] = useState(true);
   const refpassword = useRef();
-  const [temperature, setTemperature] = useState('');
-  const [humidity, setHumidity] = useState('');
+  const [temperature, setTemperature] = useState('00.0');
+  const [humidity, setHumidity] = useState('00.0');
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   console.log('Hasnat');
-  //   socket.emit('data', 'I am sending data');
-  //   socket.on('temp', data => {
-  //     console.log(data);
-  //     setTemperature(data);
-  //   });
-  //   socket.on('humd', data => {
-  //     console.log(data);
-  //     setHumidity(data);
-  //   });
-  //   dispatch(fetchStatus());
-  //   dispatch(fetchStatus2());
-  // }, []);
+  useEffect(() => {
+    console.log('Hasnat');
+    socket.emit('data', 'I am sending data');
+    socket.on('temp', data => {
+      console.log(data);
+      setTemperature(data);
+    });
+    socket.on('humd', data => {
+      console.log(data);
+      setHumidity(data);
+    });
+    dispatch(fetchStatus());
+    dispatch(fetchStatus2());
+  }, []);
 
   return (
     <SafeAreaView style={STYLES.container}>
@@ -255,7 +255,13 @@ const DashBoard = ({navigation, route}) => {
                     </View>
                   </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.card}>
+                <TouchableOpacity
+                  style={styles.card}
+                  onPress={() =>
+                    navigation.navigate('WeatherScreen', {
+                      data: 'device2',
+                    })
+                  }>
                   <View style={styles.cardContainer}>
                     <EntypoIcon name="drop" size={40} color="#000000" />
 
@@ -277,9 +283,7 @@ const DashBoard = ({navigation, route}) => {
                           {humidity} gm/3
                         </Text>
                       </View>
-                      <TouchableOpacity
-                        onPress={() => navigation.navigate('Button')}
-                        style={styles.cardbtn}>
+                      <TouchableOpacity style={styles.cardbtn}>
                         <Text
                           style={{
                             color: '#ffff',
