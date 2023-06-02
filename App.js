@@ -18,6 +18,7 @@ import Splash from './src/components/Splash';
 import Dashboard from './src/components/Dashboard';
 import Home from './src/components/Home';
 import Chart from './src/components/Chart';
+import NoInternet from './src/components/NoInternet/index'
 function HomeScreen() {
   return (
     // eslint-disable-next-line react-native/no-inline-styles
@@ -33,7 +34,7 @@ function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Dashboard">
+        <Stack.Navigator initialRouteName="Login">
           <Stack.Screen
             name="Login"
             component={Login}
@@ -95,6 +96,7 @@ function App() {
             options={{headerShown: false}}
           />  */}
         </Stack.Navigator>
+        <NoInternet />
       </NavigationContainer>
     </Provider>
   );
