@@ -5,7 +5,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import WeatherCard from '../../component/WeatherCard';
 
 const WeatherScreen = ({navigation, route}) => {
-  console.log(route.params.data);
+  // console.log(route.params.data);
   const data = [1, 3, 4, 5, 6, 67, 7, 8];
   return (
     <View style={{flex: 1, backgroundColor: '#1c744a'}}>
@@ -57,7 +57,7 @@ const WeatherScreen = ({navigation, route}) => {
             }}
             onPress={() =>
               navigation.navigate('Button', {
-                paramKey: route.params.data,
+                paramKey: '',
               })
             }>
             <Text style={{color: '#fff'}}>Control Device</Text>

@@ -31,10 +31,7 @@ import {appImages} from '../../assets/utilities';
 import {MyButton} from '../../component/MyButton';
 import Eye from 'react-native-vector-icons/Ionicons';
 import {useFormik} from 'formik';
-import {getStatus, login} from '../../api';
-import {useDispatch} from 'react-redux';
-import {fetchStatus} from '../../redux/slices/device1';
-import {fetchStatus2} from '../../redux/slices/device2';
+import {login} from '../../api';
 
 const DashBoard = ({navigation, route}) => {
   const [myfocus, setMyfocus] = useState('');
@@ -43,9 +40,6 @@ const DashBoard = ({navigation, route}) => {
   const refpassword = useRef();
   const [temperature, setTemperature] = useState('');
   const [humidity, setHumidity] = useState('');
-
-  const dispatch = useDispatch();
-
   useEffect(() => {
     console.log('Hasnat');
     socket.emit('data', 'I am sending data');
@@ -57,9 +51,7 @@ const DashBoard = ({navigation, route}) => {
       console.log(data);
       setHumidity(data);
     });
-    dispatch(fetchStatus());
-    dispatch(fetchStatus2());
-  }, []);
+  });
   return (
     <SafeAreaView style={STYLES.container}>
       <StatusBar
@@ -184,11 +176,7 @@ const DashBoard = ({navigation, route}) => {
                 }}>
                 <View style={styles.rowView}>
                   <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate('WeatherScreen', {
-                        data: 'device1',
-                      })
-                    }
+                    onPress={() => navigation.navigate('WeatherScreen')}
                     style={styles.card}>
                     <View style={styles.cardContainer}>
                       <Icon
@@ -220,7 +208,11 @@ const DashBoard = ({navigation, route}) => {
                           </Text>
                         </View>
                         <TouchableOpacity
-                          onPress={() => navigation.navigate('Button')}
+                          onPress={() =>
+                            navigation.navigate('WeatherScreen', {
+                              data: 'device1',
+                            })
+                          }
                           style={styles.cardbtn}>
                           <Text style={{color: '#ffff', fontSize: 11}}>
                             Manage
@@ -229,15 +221,7 @@ const DashBoard = ({navigation, route}) => {
                       </View>
                     </View>
                   </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.card}
-                    onPress={() =>
-                      navigation.navigate('WeatherScreen', {
-                        data: 'device2',
-                      })
-                    }>
-                  <TouchableOpacity
-                   style={styles.card}>
+                  <TouchableOpacity style={styles.card}>
                     <View style={styles.cardContainer}>
                       <EntypoIcon name="drop" size={53} color="#1b95e0" />
 
@@ -272,7 +256,11 @@ const DashBoard = ({navigation, route}) => {
                 {/*  */}
                 <View style={styles.rowView}>
                   <TouchableOpacity
-                    onPress={() => navigation.navigate('WeatherScreen')}
+                    onPress={() =>
+                      navigation.navigate('WeatherScreen', {
+                        data: 'device1',
+                      })
+                    }
                     style={styles.card}>
                     <View style={styles.cardContainer}>
                       <Icon
@@ -348,7 +336,11 @@ const DashBoard = ({navigation, route}) => {
                 {/* ---------------------- */}
                 <View style={styles.rowView}>
                   <TouchableOpacity
-                    onPress={() => navigation.navigate('WeatherScreen')}
+                    onPress={() =>
+                      navigation.navigate('WeatherScreen', {
+                        data: 'device1',
+                      })
+                    }
                     style={styles.card}>
                     <View style={styles.cardContainer}>
                       <Icon

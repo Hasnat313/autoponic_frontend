@@ -65,15 +65,15 @@ function App() {
             options={{headerShown: false}}
           />
           <Stack.Screen
-            name="DashBoard"
-            component={DashBoard}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
             name="Dashboard"
             component={Dashboard}
             options={{headerShown: false}}
           />
+          {/* <Stack.Screen
+            name="Dashboard"
+            component={Dashboard}
+            options={{headerShown: false}}
+          /> */}
           <Stack.Screen
             name="Chart"
             component={Chart}
