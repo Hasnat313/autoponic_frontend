@@ -532,7 +532,6 @@ const onRefresh = React.useCallback(() => {
         />
 
 
-        <View style={styles.container}>
           <BarChart
             data={{
               labels: ['Highest', 'Lowest', 'Current'],
@@ -548,7 +547,6 @@ const onRefresh = React.useCallback(() => {
             chartConfig={{
               backgroundGradientFrom: '#ffffff',
               backgroundGradientTo: '#ffffff',
-              decimalPlaces: 1,
               color: (opacity = 1) => `rgba(0, 128, 0, 1)`,
               style: {
                 borderRadius: 16,
@@ -562,9 +560,9 @@ const onRefresh = React.useCallback(() => {
                 gridColor: 'white', // Set y-axis grid lines color to white
               },
               fillShadowGradient: `rgba(0, 128, 0, 1)`, // Set shaded area color to green with increased opacity
+              
             }}
           />
-        </View>
 
 
       </View>

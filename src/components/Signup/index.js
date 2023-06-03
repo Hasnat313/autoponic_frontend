@@ -39,16 +39,23 @@ const Signup = ({navigation, route}) => {
   const refpassword = useRef();
   const [title , setTitle] = useState("");
   const [message , setMessage] = useState("")
+  const [progress , setprogress] = useState();
+  const [confirmButtonColor , setconfirmButtonColor] = useState("")
+  const [showConfirmButton, setshowConfirmButton] = useState(false);
 
-  const showAlert = (title , message) => {
+  const showAlert = (title , message , progress , confirmButtonColor , showConfirmButton ) => {
     setTitle(title);
     setMessage(message)
     setAlertVisible(true);
+    setconfirmButtonColor(confirmButtonColor);
+    setprogress(progress)
+    setshowConfirmButton(showConfirmButton)
   };
 
   const hideAlert = () => {
     setAlertVisible(false);
   };
+
   const initialValues = {
     user_name: '',
     email: '',
@@ -61,43 +68,54 @@ const Signup = ({navigation, route}) => {
       try {
         console.log('called');
         if (values.user_name.length < 1) {
-          showAlert("Missing user name!" , "Please provide user name" )
+          showAlert("Missing user name!" , "Please provide user name"  , false , "#AA4A44", true )
         } 
         else if(values.email.length<1){
-          showAlert("Missing Email!" , "Please provide email" )
+          showAlert("Missing Email!" , "Please provide email" ,  false , "#AA4A44", true  )
 
         }
         else if (
-          
           !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.email)
         ) {
-          showAlert("Invalid Email!" , "Please provide Correct email format" )
+          showAlert("Invalid Email!" , "Please provide Correct email format" ,  false , "#AA4A44", true )
 
         } else if (values.password.length < 6) {
-          showAlert("password Length!" , "Password length should not be lesser than 6" )
+          showAlert("password Length!" , "Password length should not be lesser than 6" ,  false , "#AA4A44", true  )
         }
         else if(values.confirm_password.length <1){
-          showAlert("Confirm password Missing!" , "Confirm Password must be provided" )
+          showAlert("Confirm password Missing!" , "Confirm Password must be provided" ,  false , "#AA4A44", true  )
         } 
         else if (values.password != values.confirm_password){
-          showAlert("Invalid Password!" , "password and confirm password must be same" )
+          showAlert("Invalid Password!" , "password and confirm password must be same" ,  false , "#AA4A44", true  )
         }
           else {
-            console.log(values)
-          const {data} = await register(values);
-          console.log("response" ,data);
+          const {data} = await register({
+            user_name : values.user_name,
+            email : values.email,
+            password : values.password
+          });
+          console.log(data)
           if (data.statusCode == 201) {
-            alert('Registered Successfully!');
-            navigation.navigate('Login');
+            showAlert("Registered Successfully!" , `Dear ${values.user_name} you have been registered` , false , '#A1CE69' , false )
+            setTimeout(()=>{
+              hideAlert();
+              navigation.navigate('Login');
+            }, 1000);
+
+            
+          }
+          else if(data.status== "failed"){
+            showAlert("oops! Error Ocurred" , `"${e?.response?.data?.message}"` , false , '#AA4A44' , true)
+
           }
         }
-      } catch (e) {
-        console.log(e);
-        console.log(e?.response?.data?.message);
-        alert(e?.response?.data?.message);
+        }
+        catch (e) {
+          console.log(e);
+          console.log(e?.response?.data?.message);
+          showAlert("oops! Error Ocurred" , `"${e?.response?.data?.message}"` , false , '#AA4A44' , true)
 
-        // setError(e?.response?.data?.message)
-      }
+        }
     },
   });
 
@@ -193,7 +211,7 @@ const Signup = ({navigation, route}) => {
                   justifyContent: 'flex-end',
                   alignItems: 'center',
                 }}>
-                <TouchableOpacity style={styles.btn} onPress={handleSubmit}>
+                <TouchableOpacity style={styles.btn} onPress={() => handleSubmit()}>
                   <Text style={styles.btnText}>SignUp</Text>
                 </TouchableOpacity>
                 <Text style={{color: '#000', fontSize: 14}}>
@@ -206,17 +224,17 @@ const Signup = ({navigation, route}) => {
                 </Text>
               </View>
             </View>
-          <AwesomeAlert
+            <AwesomeAlert
           show={isAlertVisible}
-          showProgress={false}
+          showProgress={progress}
           title={title}
           message={message}
           closeOnTouchOutside={true}
           closeOnHardwareBackPress={false}
           showCancelButton={false}
-          showConfirmButton={true}
+          showConfirmButton={showConfirmButton}
           confirmText="OK"
-          confirmButtonColor="#A1CE69"
+          confirmButtonColor={confirmButtonColor}
           onConfirmPressed={hideAlert}
         />
           </View>
