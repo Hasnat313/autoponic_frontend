@@ -27,17 +27,33 @@ import {MyButton} from '../../component/MyButton';
 import Eye from 'react-native-vector-icons/Ionicons';
 import {register} from '../../api';
 import {useFormik} from 'formik';
+import AwesomeAlert from 'react-native-awesome-alerts';
+
 // import {useSelector, useDispatch} from 'react-redux';
 
 const Signup = ({navigation, route}) => {
   const [myfocus, setMyfocus] = useState('');
   const [softinput, setSoftinput] = useState(false);
   const [issecure, setIssecure] = useState(true);
+  const [isAlertVisible, setAlertVisible] = useState(false);
   const refpassword = useRef();
+  const [title , setTitle] = useState("");
+  const [message , setMessage] = useState("")
+
+  const showAlert = (title , message) => {
+    setTitle(title);
+    setMessage(message)
+    setAlertVisible(true);
+  };
+
+  const hideAlert = () => {
+    setAlertVisible(false);
+  };
   const initialValues = {
     user_name: '',
     email: '',
     password: '',
+    confirm_password : ''
   };
   const {values, errors, handleBlur, handleChange, handleSubmit} = useFormik({
     initialValues: initialValues,
@@ -45,19 +61,33 @@ const Signup = ({navigation, route}) => {
       try {
         console.log('called');
         if (values.user_name.length < 1) {
-          alert('User Name Required!!');
-        } else if (
+          showAlert("Missing user name!" , "Please provide user name" )
+        } 
+        else if(values.email.length<1){
+          showAlert("Missing Email!" , "Please provide email" )
+
+        }
+        else if (
+          
           !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.email)
         ) {
-          alert('Invalid Email Format!!');
+          showAlert("Invalid Email!" , "Please provide Correct email format" )
+
         } else if (values.password.length < 6) {
-          alert('Password length should be greater then 6');
-        } else {
+          showAlert("password Length!" , "Password length should not be lesser than 6" )
+        }
+        else if(values.confirm_password.length <1){
+          showAlert("Confirm password Missing!" , "Confirm Password must be provided" )
+        } 
+        else if (values.password != values.confirm_password){
+          showAlert("Invalid Password!" , "password and confirm password must be same" )
+        }
+          else {
+            console.log(values)
           const {data} = await register(values);
-          console.log(data);
+          console.log("response" ,data);
           if (data.statusCode == 201) {
             alert('Registered Successfully!');
-            // navigate("/authentication/sign-in")
             navigation.navigate('Login');
           }
         }
@@ -70,7 +100,7 @@ const Signup = ({navigation, route}) => {
       }
     },
   });
-  console.log(values);
+
 
   return (
     <SafeAreaView style={STYLES.container}>
@@ -138,11 +168,24 @@ const Signup = ({navigation, route}) => {
                 }}>
                 Sign UP
               </Text>
-              <TextInput style={styles.textinput} placeholder="Email" />
-              <TextInput style={styles.textinput} placeholder="Password" />
+              <TextInput style={styles.textinput} placeholder="User Name" name = 'user_name'
+              onChangeText={handleChange('user_name')}
+              value={values.user_name}
+              />
+              <TextInput style={styles.textinput} placeholder="abc@gmail.com" name = 'email' 
+                onChangeText={handleChange('email')}
+                value={values.email}
+              />
+              <TextInput style={styles.textinput} placeholder="Password" name = 'password'
+                onChangeText={handleChange('password')}
+                value={values.password}
+              />
               <TextInput
                 style={styles.textinput}
                 placeholder="Confirm Password"
+                name = 'confirm_password'
+                onChangeText={handleChange('confirm_password')}
+                value={values.confirm_password}
               />
               <View
                 style={{
@@ -150,7 +193,7 @@ const Signup = ({navigation, route}) => {
                   justifyContent: 'flex-end',
                   alignItems: 'center',
                 }}>
-                <TouchableOpacity style={styles.btn}>
+                <TouchableOpacity style={styles.btn} onPress={handleSubmit}>
                   <Text style={styles.btnText}>SignUp</Text>
                 </TouchableOpacity>
                 <Text style={{color: '#000', fontSize: 14}}>
@@ -163,6 +206,19 @@ const Signup = ({navigation, route}) => {
                 </Text>
               </View>
             </View>
+          <AwesomeAlert
+          show={isAlertVisible}
+          showProgress={false}
+          title={title}
+          message={message}
+          closeOnTouchOutside={true}
+          closeOnHardwareBackPress={false}
+          showCancelButton={false}
+          showConfirmButton={true}
+          confirmText="OK"
+          confirmButtonColor="#A1CE69"
+          onConfirmPressed={hideAlert}
+        />
           </View>
       </ScrollView>
     </SafeAreaView>

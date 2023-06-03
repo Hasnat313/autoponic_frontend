@@ -1,14 +1,33 @@
-import {StyleSheet, Text, TouchableOpacity, View, FlatList} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View, FlatList , RefreshControl , ScrollView} from 'react-native';
 import React from 'react';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import WeatherCard from '../../component/WeatherCard';
 
 const WeatherScreen = ({navigation, route}) => {
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
+
   // console.log(route.params.data);
   const data = [1, 3, 4, 5, 6, 67, 7, 8];
   return (
-    <View style={{flex: 1, backgroundColor: '#8CC63E'}}>
+
+   <ScrollView
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps={'always'}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+        contentContainerStyle={{
+          flex: 1,
+        }}>
+       <View style={{flex: 1, backgroundColor: '#8CC63E'}}>
       <View
         style={{
           flex: 1,
@@ -79,6 +98,7 @@ const WeatherScreen = ({navigation, route}) => {
           </TouchableOpacity>
         </View>
       </View>
+      
       <View
         style={{
           flex: 1.2,
@@ -88,6 +108,7 @@ const WeatherScreen = ({navigation, route}) => {
           alignItems: 'center',
           padding: 20,
         }}>
+        
         <View
           style={{
             width: '20%',
@@ -96,7 +117,8 @@ const WeatherScreen = ({navigation, route}) => {
             backgroundColor: '#fff',
             marginBottom: 20,
           }}></View>
-        <FlatList
+       
+          <FlatList
           style={{width: '100%'}}
           showsVerticalScrollIndicator={false}
           data={data}
@@ -108,8 +130,11 @@ const WeatherScreen = ({navigation, route}) => {
             />
           )}
         />
-      </View>
+              </View>
     </View>
+
+    </ScrollView>
+   
   );
 };
 

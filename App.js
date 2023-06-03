@@ -91,7 +91,7 @@ function App() {
             options={{headerShown: false}}
           />  */}
         </Stack.Navigator>
-        <NoInternet />
+        <NoInternet disconnectedScreen="Dashboard" />
       </NavigationContainer>
     </Provider>
   );
