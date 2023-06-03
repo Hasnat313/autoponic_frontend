@@ -24,8 +24,20 @@ const config = {
 //     return Promise.reject(error);
 //   },
 // );
-export const register = authFormData =>
-  API.post('user/register', authFormData, config);
+// export const register = async authFormData => {
+//   try {
+//     console.log('this is data', authFormData);
+//     console.log(BASE_URL);
+//     const response = await fetch(
+//       'https://autoponic.softwisesol.com/user/getAllUsers',
+//     );
+//     const json = await response.json();
+//     console.log(json);
+//   } catch (error) {
+//     console.error('API Error:', error.message);
+//     throw error;
+//   }
+// };
 export const login = authFormData =>
   API.post('user/login', authFormData, config);
 export const getStatus = () =>

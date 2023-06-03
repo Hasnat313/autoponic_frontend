@@ -1,14 +1,15 @@
-import {LineChart , BarChart} from 'react-native-chart-kit';
-import {StyleSheet, Text, View, Switch, TouchableOpacity} from 'react-native';
-import {Dimensions} from 'react-native';
+import { LineChart, BarChart } from 'react-native-chart-kit';
+import { StyleSheet, Text, View, Switch, TouchableOpacity, SafeAreaView, StatusBar, Image , ScrollView , RefreshControl } from 'react-native';
+import { Dimensions } from 'react-native';
 import {
   responsiveFontSize,
   responsiveHeight,
   responsiveScreenHeight,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
+import React from 'react';
 
-const data =[{
+const data = [{
   "id": 1,
   "created_at": "0:41",
   "temperature": 17.9
@@ -444,14 +445,56 @@ const sampledData = sortedData.filter((_, index) => index % interval === 0);
 const labels = sampledData.map((dataPoint) => dataPoint.created_at);
 const temperatures = sampledData.map((dataPoint) => dataPoint.temperature);
 
+
+
+
 export default function Chart() {
+
+  const [refreshing, setRefreshing] = React.useState(false);
+
+const onRefresh = React.useCallback(() => {
+  setRefreshing(true);
+  setTimeout(() => {
+    setRefreshing(false);
+  }, 2000);
+}, []);
+
   return (
-    <>
+    <SafeAreaView style={styles.container}>
+
       <View style={styles.header}>
-        <Text style={styles.heading}>Temperature Analysis of Today</Text>
+        <Image
+          source={require('../../assets/images/mainscreen/flowers-gd5216de8a_1280.png')}
+          style={{
+            width: responsiveWidth(40),
+            height: responsiveHeight(50),
+            resizeMode: 'contain',
+            // position: 'absolute',
+            marginHorizontal: 'auto',
+            alignSelf: 'center',
+
+          }}
+        />
+
+
       </View>
-      <View style={styles.container}>
+
+      <ScrollView 
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+      >
+             <View style={styles.bottomMain}>
+
+        <View style={styles.heading}>
+          <Text style={styles.headingText}>
+            Temperature Analysis
+          </Text>
+        </View>
         <LineChart
+        style = {{
+            marginBottom : 20
+        }}
           data={{
             labels: labels,
             datasets: [
@@ -461,31 +504,35 @@ export default function Chart() {
             ],
           }}
           width={Dimensions.get('window').width - 20}
+          yAxisLabel=""
+          yAxisSuffix="°"
+          xAxisLabel=""
+          xAxisSuffix="T"
           height={220}
           chartConfig={{
             backgroundGradientFrom: '#ffffff',
             backgroundGradientTo: '#ffffff',
             decimalPlaces: 1,
-            color: (opacity = 1) => `rgba(58, 175, 83, 0.8)`,
+            color: (opacity = 1) => `rgba(0, 128, 0, 1)`,
             style: {
-              borderRadius: 16,
+              borderRadius: 16
             },
             xAxis: {
-              labelColor: 'green', // Set x-axis label color to green
+              labelColor: 'black', // Set x-axis label color to green
               gridColor: 'white', // Set x-axis grid lines color to white
             },
             yAxis: {
-              labelColor: 'green', // Set y-axis label color to green
+              labelColor: 'black', // Set y-axis label color to green
               gridColor: 'white', // Set y-axis grid lines color to white
             },
-            fillShadowGradient: 'rgba(58, 175, 83, 0.8)', 
+            fillShadowGradient: `rgba(0, 128, 0, 1)`,
             useShadowColorFromDataset: true// Set shaded area color to green with increased opacity
           }}
           bezier
         />
 
+
         <View style={styles.container}>
-          <Text style={styles.title}>Temperature Chart</Text>
           <BarChart
             data={{
               labels: ['Highest', 'Lowest', 'Current'],
@@ -496,12 +543,13 @@ export default function Chart() {
               ],
             }}
             width={Dimensions.get('window').width - 20}
+            
             height={220}
             chartConfig={{
               backgroundGradientFrom: '#ffffff',
               backgroundGradientTo: '#ffffff',
               decimalPlaces: 1,
-              color: (opacity = 1) => `rgba(58, 175, 83, 0.8)`,
+              color: (opacity = 1) => `rgba(0, 128, 0, 1)`,
               style: {
                 borderRadius: 16,
               },
@@ -513,50 +561,41 @@ export default function Chart() {
                 labelColor: 'green', // Set y-axis label color to green
                 gridColor: 'white', // Set y-axis grid lines color to white
               },
-              fillShadowGradient: 'rgba(0, 128, 0, 0.5)', // Set shaded area color to green with increased opacity
+              fillShadowGradient: `rgba(0, 128, 0, 1)`, // Set shaded area color to green with increased opacity
             }}
           />
         </View>
+
+
       </View>
-    </>
+      </ScrollView>
+     
+
+
+    </SafeAreaView>
+
+
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    paddingVertical: 20,
-    backgroundColor : '#ffffff',
+    backgroundColor: '#ffffff'
   },
-  header:{
-    height : responsiveHeight(11),
-    width : responsiveWidth(100),
-    backgroundColor : '#508e46',
-    borderBottomEndRadius: 50,
-    borderBottomLeftRadius: 50,
-    alignContent : 'center',
-    justifyContent : 'center',
-    marginBottom : '10%'
-
-    },
+  header: {
+    height: responsiveHeight(25),
+    width: responsiveWidth(100),
+    backgroundColor: '#8CC63E',
+    alignContent: 'center',
+    justifyContent: 'center',
+  },
   heading: {
-    fontSize: responsiveFontSize(3.5),
-    fontWeight: 'bold',
-    marginBottom: 20,
-    color: '#ffffff',
-    padding : 0,
-    textAlign: 'center',
-    marginTop : responsiveHeight(2),
-    textShadowColor: 'rgba(0, 0, 0, 0.75)',
-    textShadowOffset: {width: -1, height: 1},
-    textShadowRadius: 10
-    },
-  subHeading: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    color: '#333333',
+    height: responsiveScreenHeight(4.5),
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 35
   },
   dataContainer: {
     width: '80%',
@@ -577,14 +616,24 @@ const styles = StyleSheet.create({
   Temperature: {
     fontSize: 16,
     color: '#666666',
-    },
-    title: {
-      fontSize: 20,
-      fontWeight: 'bold',
-      marginBottom: 10,
-    },
-    chartStyle: {
-      marginVertical: 8,
-      borderRadius: 16,
-    },
-    });
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  chartStyle: {
+    marginVertical: 8,
+    borderRadius: 16,
+  },
+  bottomMain: {
+    marginTop: '10%'
+  },
+  headingText: {
+    fontSize: responsiveFontSize(3.7),
+    fontWeight: 'bold',
+    color: "#000000",
+
+
+  }
+});
