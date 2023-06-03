@@ -14,7 +14,9 @@ import WeatherCard from '../../component/WeatherCard';
 
 const WeatherScreen = ({navigation, route}) => {
   const [refreshing, setRefreshing] = React.useState(false);
-
+  console.log('====================================');
+  console.log(route.params.data);
+  console.log('====================================');
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {

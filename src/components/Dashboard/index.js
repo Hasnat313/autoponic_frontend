@@ -213,7 +213,9 @@ const DashBoard = ({navigation, route}) => {
               }}>
               <View style={styles.rowView}>
                 <TouchableOpacity
-                  onPress={() => navigation.navigate('WeatherScreen')}
+                  onPress={() =>
+                    navigation.navigate('WeatherScreen', {data: 'device1'})
+                  }
                   style={styles.card}>
                   <View style={styles.cardContainer}>
                     <Icon
@@ -262,7 +264,11 @@ const DashBoard = ({navigation, route}) => {
                     </View>
                   </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.card}>
+                <TouchableOpacity
+                  style={styles.card}
+                  onPress={() =>
+                    navigation.navigate('WeatherScreen', {data: 'device2'})
+                  }>
                   <View style={styles.cardContainer}>
                     <EntypoIcon name="drop" size={40} color="#000000" />
 
