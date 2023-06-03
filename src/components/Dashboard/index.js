@@ -10,6 +10,7 @@ import {
   ImageBackground,
   TextInput,
   BackHandler,
+  RefreshControl,
 } from 'react-native';
 import React, {useState, useRef, useEffect} from 'react';
 import socket from '../../socket';
@@ -48,6 +49,14 @@ const DashBoard = ({navigation, route}) => {
   const refpassword = useRef();
   const [temperature, setTemperature] = useState('00.0');
   const [humidity, setHumidity] = useState('00.0');
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   const dispatch = useDispatch();
 
@@ -65,7 +74,6 @@ const DashBoard = ({navigation, route}) => {
     dispatch(fetchStatus());
     dispatch(fetchStatus2());
   }, []);
-
   return (
     <SafeAreaView style={STYLES.container}>
       <StatusBar
@@ -78,6 +86,9 @@ const DashBoard = ({navigation, route}) => {
       <ScrollView
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps={'always'}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
         contentContainerStyle={{
           flexGrow: 1,
           justifyContent: 'space-between',
@@ -202,11 +213,7 @@ const DashBoard = ({navigation, route}) => {
               }}>
               <View style={styles.rowView}>
                 <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate('WeatherScreen', {
-                      data: 'device1',
-                    })
-                  }
+                  onPress={() => navigation.navigate('WeatherScreen')}
                   style={styles.card}>
                   <View style={styles.cardContainer}>
                     <Icon
@@ -232,7 +239,7 @@ const DashBoard = ({navigation, route}) => {
                         <Text
                           style={{
                             color: '#1c744a',
-                            fontSize: responsiveFontSize(2),
+                            fontSize: responsiveFontSize(1.7),
                             fontWeight: '500',
                           }}>
                           {temperature} °C
@@ -255,13 +262,7 @@ const DashBoard = ({navigation, route}) => {
                     </View>
                   </View>
                 </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.card}
-                  onPress={() =>
-                    navigation.navigate('WeatherScreen', {
-                      data: 'device2',
-                    })
-                  }>
+                <TouchableOpacity style={styles.card}>
                   <View style={styles.cardContainer}>
                     <EntypoIcon name="drop" size={40} color="#000000" />
 
@@ -278,7 +279,7 @@ const DashBoard = ({navigation, route}) => {
                         <Text
                           style={{
                             color: '#1c744a',
-                            fontSize: responsiveFontSize(2.5),
+                            fontSize: responsiveFontSize(1.7),
                           }}>
                           {humidity} gm/3
                         </Text>
@@ -325,7 +326,7 @@ const DashBoard = ({navigation, route}) => {
                         <Text
                           style={{
                             color: '#1c744a',
-                            fontSize: responsiveFontSize(2),
+                            fontSize: responsiveFontSize(1.7),
                             fontWeight: '500',
                           }}>
                           m3m-3
@@ -371,7 +372,7 @@ const DashBoard = ({navigation, route}) => {
                         <Text
                           style={{
                             color: '#1c744a',
-                            fontSize: responsiveFontSize(2.5),
+                            fontSize: responsiveFontSize(1.7),
                           }}>
                           {humidity} gm/3
                         </Text>
@@ -422,7 +423,7 @@ const DashBoard = ({navigation, route}) => {
                         <Text
                           style={{
                             color: '#1c744a',
-                            fontSize: responsiveFontSize(2),
+                            fontSize: responsiveFontSize(1.7),
                             fontWeight: '500',
                           }}>
                           m3m-3
@@ -462,7 +463,7 @@ const DashBoard = ({navigation, route}) => {
                         <Text
                           style={{
                             color: '#1c744a',
-                            fontSize: responsiveFontSize(2.5),
+                            fontSize: responsiveFontSize(1.7),
                           }}>
                           {humidity} gm/3
                         </Text>
