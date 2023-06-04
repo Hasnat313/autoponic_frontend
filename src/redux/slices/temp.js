@@ -6,7 +6,6 @@ import {login, updateStatus, getStatus, getTempValues} from '../../api';
 const initialState = {
   status: 'idle',
   temp: '',
-  //   loading: false,
   error: null,
 };
 

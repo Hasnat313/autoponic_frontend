@@ -2,7 +2,12 @@ import {createSlice} from '@reduxjs/toolkit';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {BASE_URL} from '../../api/BASE_URL';
 import axios from 'axios';
-import {login, updateStatus2, getStatus2} from '../../api';
+import {
+  login,
+  updateStatus2,
+  getStatus2,
+  changeAutomaticDevice2,
+} from '../../api';
 const initialState = {
   status: 'idle',
   deviceStatus: '',
@@ -17,7 +22,7 @@ export const fetchStatus2 = createAsyncThunk(
       const result = await getStatus2();
       console.log('dsf');
       console.log(result.data);
-      return result?.data?.result?.status;
+      return result?.data?.result;
     } catch (error) {
       console.log(error);
       alert(error?.response?.data?.message);
@@ -33,7 +38,23 @@ export const changeStatus2 = createAsyncThunk(
       const result = await updateStatus2(body);
       //   console.log(JSON.stringify(result.data.status));
       console.log('hasnat is device2', result.data.data.status);
-      return result.data.data.status;
+      return result.data.data;
+    } catch (error) {
+      console.log(error);
+      alert(error);
+      throw Error(error);
+    }
+  },
+);
+export const changeAutomatic2 = createAsyncThunk(
+  'device2/changeAutomatic',
+  async body => {
+    try {
+      console.log(body);
+      const result = await changeAutomaticDevice2(body);
+      //   console.log(JSON.stringify(result.data.status));
+      console.log('hasnat is device2', result.data.data.status);
+      return result.data.data;
     } catch (error) {
       console.log(error);
       alert(error);
@@ -66,6 +87,17 @@ const device2Slice = createSlice({
         state.deviceStatus = action.payload;
       })
       .addCase(changeStatus2.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(changeAutomatic2.pending, (state, action) => {
+        state.status = 'loading';
+      })
+      .addCase(changeAutomatic2.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.deviceStatus = action.payload;
+      })
+      .addCase(changeAutomatic2.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });

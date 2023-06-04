@@ -27,7 +27,11 @@ export const updateStatus = body =>
   API.put('devices/changeStatus/6472d6332133a2af8e811236', body, config);
 export const updateStatus2 = body =>
   API.put('devices/changeStatus/6472d6422133a2af8e811239', body, config);
-export const getCurrentWeather =  () =>
-  axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=33.6058&lon=73.0437&appid=b568399cc80e724faa845eb257c9f363`);
-  export const forgotPassord = authFormData =>
+export const changeAutomaticDevice2 = body =>
+  API.put('devices/automatic/6472d6422133a2af8e811239', body, config);
+export const getCurrentWeather = () =>
+  axios.get(
+    `https://api.openweathermap.org/data/2.5/weather?lat=33.6058&lon=73.0437&appid=b568399cc80e724faa845eb257c9f363`,
+  );
+export const forgotPassord = authFormData =>
   API.post('forgetPassword/userForgetPassword', authFormData, config);

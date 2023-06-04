@@ -67,8 +67,8 @@ const DashBoard = ({navigation, route}) => {
 
   const dispatch = useDispatch();
 
-  const data = useSelector(store => store.temp);
-  console.log(data);
+  // const data = useSelector(store => store.temp);
+  // console.log(data);
 
   const fetchTempData = async () => {
     const temperatureData = await getCurrentWeather(); // Assuming getCurrentWeather returns the temperature data
@@ -116,7 +116,7 @@ const DashBoard = ({navigation, route}) => {
     });
     dispatch(fetchStatus());
     dispatch(fetchStatus2());
-    dispatch(fetchTempValues());
+    // dispatch(fetchTempValues());
   }, []);
   return (
     <SafeAreaView style={STYLES.container}>

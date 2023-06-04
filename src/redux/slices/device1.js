@@ -15,7 +15,7 @@ export const fetchStatus = createAsyncThunk('device1/fetchStatus', async () => {
     const result = await getStatus();
     console.log('dsf');
     console.log(result.data);
-    return result.data.result.status;
+    return result.data.result;
   } catch (error) {
     console.log(error);
     alert(error?.response?.data?.message);
@@ -29,7 +29,7 @@ export const changeStatus = createAsyncThunk(
       const result = await updateStatus(body);
       //   console.log(JSON.stringify(result.data.status));
       console.log(result.data.data.status);
-      return result.data.data.status;
+      return result.data.data;
     } catch (error) {
       console.log(error);
       alert(error);
