@@ -1,8 +1,8 @@
 // In App.js in a new project
 
-import React, {useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 
-import {View, Text, ImageBackground, Image , AsyncStorage} from 'react-native';
+import {View, Text, ImageBackground, Image, AsyncStorage} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from './src/components/Login';
@@ -19,7 +19,7 @@ import Splash from './src/components/Splash';
 import Dashboard from './src/components/Dashboard';
 import Home from './src/components/Home';
 import Chart from './src/components/Chart';
-import NoInternet from './src/components/NoInternet/index'
+import NoInternet from './src/components/NoInternet/index';
 function HomeScreen() {
   return (
     // eslint-disable-next-line react-native/no-inline-styles
@@ -32,8 +32,6 @@ function HomeScreen() {
 const Stack = createNativeStackNavigator();
 
 function App() {
-
-
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -42,106 +40,101 @@ function App() {
 
   const checkLoginStatus = async () => {
     try {
-      console.log(isLoggedIn)
+      console.log(isLoggedIn);
       const user = await AsyncStorage.getItem('user');
-      console.log(user.email)
+      console.log(user.email);
       if (user) {
-          setIsLoggedIn(false);    
+        setIsLoggedIn(false);
+      } else {
+        // User is not logged in
+        setIsLoggedIn(false);
       }
-      else{
-         // User is not logged in
-      setIsLoggedIn(false);
 
-      }
-     
-      console.log(isLoggedIn)
-
+      console.log(isLoggedIn);
     } catch (error) {
       console.log('Error checking login status:', error);
     }
   };
 
-
   return (
     <Provider store={store}>
       <NavigationContainer>
-      <Stack.Navigator>
+        <Stack.Navigator>
           {isLoggedIn ? (
             <>
               <Stack.Screen
-                name="Dashboard"
-                component={Dashboard}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
                 name="Chart"
                 component={Chart}
-                options={{ headerShown: false }}
+                options={{headerShown: false}}
               />
               <Stack.Screen
                 name="Button"
                 component={Button}
-                options={{ headerShown: false }}
+                options={{headerShown: false}}
               />
               <Stack.Screen
                 name="WeatherScreen"
                 component={WeatherScreen}
-                options={{ headerShown: false }}
+                options={{headerShown: false}}
               />
             </>
           ) : (
             <>
-            <Stack.Screen
+              <Stack.Screen
+                name="Dashboard"
+                component={Dashboard}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
                 name="Splash"
                 component={Splash}
-                options={{ headerShown: false }}
+                options={{headerShown: false}}
               />
               <Stack.Screen
                 name="Login"
                 component={Login}
-                options={{ headerShown: false }}
+                options={{headerShown: false}}
               />
-               <Stack.Screen
+              {/* <Stack.Screen
                 name="Dashboard"
                 component={Dashboard}
-                options={{ headerShown: false }}
-              />
+                options={{headerShown: false}}
+              /> */}
               <Stack.Screen
                 name="Chart"
                 component={Chart}
-                options={{ headerShown: false }}
+                options={{headerShown: false}}
               />
               <Stack.Screen
                 name="Button"
                 component={Button}
-                options={{ headerShown: false }}
+                options={{headerShown: false}}
               />
               <Stack.Screen
                 name="WeatherScreen"
                 component={WeatherScreen}
-                options={{ headerShown: false }}
+                options={{headerShown: false}}
               />
 
-              
               <Stack.Screen
                 name="Signup"
                 component={Signup}
-                options={{ headerShown: false }}
+                options={{headerShown: false}}
               />
               <Stack.Screen
                 name="ForgotPassword"
                 component={ForgotPassword}
-                options={{ headerShown: false }}
+                options={{headerShown: false}}
               />
               <Stack.Screen
                 name="VerifyAccount"
                 component={VerifyAccount}
-                options={{ headerShown: false }}
+                options={{headerShown: false}}
               />
               <Stack.Screen
                 name="UpdatePassword"
                 component={UpdatePassword}
-                options={{ headerShown: false }}
+                options={{headerShown: false}}
               />
             </>
           )}
