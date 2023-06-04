@@ -10,6 +10,8 @@ import {
   ImageBackground,
   TextInput,
   BackHandler,
+  ToastAndroid,
+  AsyncStorage
 } from 'react-native';
 import React, {useState, useRef, useEffect} from 'react';
 import STYLES from '../STYLES';
@@ -28,6 +30,8 @@ import {MyButton} from '../../component/MyButton';
 import Eye from 'react-native-vector-icons/Ionicons';
 import {useFormik} from 'formik';
 import {login} from '../../api';
+import AwesomeAlert from 'react-native-awesome-alerts';
+
 
 // import {useSelector, useDispatch} from 'react-redux';
 
@@ -36,6 +40,27 @@ const Login = ({navigation, route}) => {
   const [softinput, setSoftinput] = useState(false);
   const [issecure, setIssecure] = useState(true);
   const refpassword = useRef();
+  const [title , setTitle] = useState("");
+  const [message , setMessage] = useState("")
+  const [progress , setprogress] = useState();
+  const [confirmButtonColor , setconfirmButtonColor] = useState("")
+  const [isAlertVisible, setAlertVisible] = useState(false);
+  const [showConfirmButton, setshowConfirmButton] = useState(false);
+
+
+
+  const showAlert = (title , message , progress , confirmButtonColor , showConfirmButton ) => {
+    setTitle(title);
+    setMessage(message)
+    setAlertVisible(true);
+    setconfirmButtonColor(confirmButtonColor);
+    setprogress(progress)
+    setshowConfirmButton(showConfirmButton)
+  };
+
+  const hideAlert = () => {
+    setAlertVisible(false);
+  };
 
   const initialValues = {
     email: '',
@@ -46,26 +71,43 @@ const Login = ({navigation, route}) => {
     onSubmit: async values => {
       try {
         console.log('called');
-        if (
+        if(values.email.length<1){
+          showAlert("Missing Email!" , "Please provide email" , false , '#AA4A44' , true)
+
+        }
+        else if (
           !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.email)
         ) {
-          alert('Invalid Email!!');
-        } else if (values?.password?.length < 1) {
-          alert('Please Enter Password!!');
+          showAlert("Invalid Email!" , "Please provide Correct email format" , false , '#AA4A44' , true )
+
+        } else if (values.password.length < 1) {
+          showAlert("password must be provide!" , "Must provide password" , false , '#AA4A44' , true)
         } else {
-          navigation.navigate('DashBoard');
+          // navigation.navigate('DashBoard');
           const {data} = await login(values);
           console.log(data);
           if (data.status == 'success') {
-            // alert("Reg Successfully!");
-            // navigate("/authentication/sign-in")
-            navigation.navigate('DashBoard');
+            ToastAndroid.show('Logged in Successfully!', ToastAndroid.SHORT);
+            showAlert("Logged in" , "Congrats you logged in successfully" , false , '#A1CE69' , false )
+            setTimeout(()=>{
+              hideAlert();
+              let obj = {  
+                email: values.email,  
+                password: values.password,  
+              }  
+              AsyncStorage.setItem('user',JSON.stringify(obj));
+              navigation.navigate('Dashboard');
+            }, 1000);
+
+          }
+          else if(data.message == 'Email or Password is incorrect'){
+            showAlert("Email or password is wrong" , "Kindly provide valid email and password" , false , '#AA4A44' , true )
           }
         }
       } catch (e) {
         console.log(e);
         console.log(e?.response?.data?.message);
-        alert(e?.response?.data?.message);
+        showAlert("Email or password is wrong" , "Kindly provide valid email and password" , false , '#AA4A44' , true )
 
         // setError(e?.response?.data?.message)
       }
@@ -142,8 +184,22 @@ const Login = ({navigation, route}) => {
                 }}>
                 Sign In
               </Text>
-              <TextInput style={styles.textinput} placeholder="Email" />
-              <TextInput style={styles.textinput} placeholder="Password" />
+              <TextInput style={styles.textinput} placeholder="abc@gmail.com" name = 'email' 
+                onChangeText={handleChange('email')}
+                value={values.email}
+              />
+              <TextInput style={styles.textinput} placeholder="Password" name = 'password'
+                onChangeText={handleChange('password')}
+                value={values.password}
+              />
+               <Text
+                    style={{color: '#21835a' , textDecorationLine: "underline"}}
+                    onPress={() => {
+          
+                      return navigation.navigate('ForgotPassword');
+                    }}>
+                    Forgot password?
+                  </Text>
               <View
                 style={{
                   flex: 0.9,
@@ -152,7 +208,7 @@ const Login = ({navigation, route}) => {
                 }}>
                 <TouchableOpacity
                   style={styles.btn}
-                  onPress={() => navigation.navigate('Dashboard')}>
+                  onPress={() => handleSubmit()}>
                   <Text style={styles.btnText}>Login</Text>
                 </TouchableOpacity>
                 <Text style={{color: '#000', fontSize: 14}}>
@@ -168,6 +224,19 @@ const Login = ({navigation, route}) => {
                   </Text>
                 </Text>
               </View>
+              <AwesomeAlert
+          show={isAlertVisible}
+          showProgress={progress}
+          title={title}
+          message={message}
+          closeOnTouchOutside={true}
+          closeOnHardwareBackPress={false}
+          showCancelButton={false}
+          showConfirmButton={showConfirmButton}
+          confirmText="OK"
+          confirmButtonColor={confirmButtonColor}
+          onConfirmPressed={hideAlert}
+        />
             </View>
           </View>
       </ScrollView>

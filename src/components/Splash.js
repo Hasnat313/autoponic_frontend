@@ -12,15 +12,15 @@ const Splash = ({navigation}) => {
     navigation.replace('Login');
   }, 3000);
   return (
-    <LinearGradient
-      colors={['#2cab82', '#21835a', '#156236']}
+    <View
       style={{
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor : "#8CC63E"
       }}>
       <Image
-        source={require('../assets/images/plant.png')}
+        source={require('../assets/images/mainscreen/flowers-gd5216de8a_1280.png')}
         style={{
           width: responsiveWidth(70),
           height: responsiveHeight(45),
@@ -36,7 +36,7 @@ const Splash = ({navigation}) => {
                 flex: 1,
               }}
               source={require('./splashImage.jpg')}></ImageBackground> */}
-    </LinearGradient>
+    </View>
   );
 };
 

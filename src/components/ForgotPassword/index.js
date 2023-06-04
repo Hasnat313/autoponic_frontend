@@ -18,6 +18,7 @@ import {
   responsiveScreenHeight,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
+import {useFormik} from 'formik';
 
 import {useFocusEffect} from '@react-navigation/native';
 
@@ -25,16 +26,92 @@ import {fontFamily} from '../../constants/fonts';
 import {appImages} from '../../assets/utilities';
 import {MyButton} from '../../component/MyButton';
 import Eye from 'react-native-vector-icons/Ionicons';
+import AwesomeAlert from 'react-native-awesome-alerts';
+
+import {forgotPassord} from '../../api';
+
 const ForgotPassword = props => {
   const [issecure, setIssecure] = useState(true);
   const [myfocus, setMyfocus] = useState('');
   const [softinput, setSoftinput] = useState(false);
   const [text, setText] = useState('');
+
+  const [title , setTitle] = useState("");
+  const [message , setMessage] = useState("")
+  const [progress , setprogress] = useState();
+  const [confirmButtonColor , setconfirmButtonColor] = useState("")
+  const [isAlertVisible, setAlertVisible] = useState(false);
+  const [showConfirmButton, setshowConfirmButton] = useState(false);
+
+
+
+  const showAlert = (title , message , progress , confirmButtonColor , showConfirmButton ) => {
+    setTitle(title);
+    setMessage(message)
+    setAlertVisible(true);
+    setconfirmButtonColor(confirmButtonColor);
+    setprogress(progress)
+    setshowConfirmButton(showConfirmButton)
+  };
+
+  const hideAlert = () => {
+    setAlertVisible(false);
+  };
+
   useFocusEffect(
     React.useCallback(() => {
       setSoftinput(true);
     }, []),
   );
+
+  const initialValues = {
+    email: '',
+  };
+  const {values, errors, handleBlur, handleChange, handleSubmit} = useFormik({
+    initialValues: initialValues,
+    onSubmit: async values => {
+      try {
+        console.log('called');
+        if(values.email.length<1){
+          showAlert("Missing Email!" , "Please provide email" , false , '#AA4A44' , true)
+
+        }
+        else if (
+          !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.email)
+        ) {
+          showAlert("Invalid Email!" , "Please provide Correct email format" , false , '#AA4A44' , true )
+
+        }  else {
+          // navigation.navigate('DashBoard');
+          console.log(values)
+          const {data} = await forgotPassord(values);
+          console.log(data);
+          if (data.status == true) {
+            // ToastAndroid.show('Logged in Successfully!', ToastAndroid.SHORT);
+            showAlert("Email Send" , "Email is send to your account" , false , '#A1CE69' , false )
+            setTimeout(()=>{
+              hideAlert();
+              navigation.navigate('VerifyAccount');
+            }, 1000);
+
+          }
+          else if(data.data.message== 'No one found with This Email address'){
+            showAlert("Email is wrong" , "Kindly provide valid email" , false , '#AA4A44' , true )
+          }
+        }
+      } catch (e) {
+        console.log(e);
+        console.log(e?.response?.data?.message);
+        showAlert("Email Error" , "Could not send email" , false , '#AA4A44' , true )
+
+        // setError(e?.response?.data?.message)
+      }
+    },
+  });
+  console.log(values);
+
+
+
   return (
     <SafeAreaView style={STYLES.container}>
       <StatusBar
@@ -42,15 +119,6 @@ const ForgotPassword = props => {
         hidden={false}
         backgroundColor={'transparent'}
         translucent={true}
-      />
-      <Image
-        source={require('../../../new.jpg')}
-        style={{
-          width: responsiveWidth(100),
-          height: responsiveHeight(100),
-          position: 'absolute',
-        }}
-        resizeMode="cover"
       />
 
       <ScrollView
@@ -78,46 +146,31 @@ const ForgotPassword = props => {
               selectionColor={'#00CE30'}
               onFocus={() => setMyfocus('email')}
               onSubmitEditing={() => setMyfocus('')}
-              onChangeText={text => setText(text)}
-              value={text}
+              name = 'email' 
+              onChangeText={handleChange('email')}
+              value={values.email}
             />
           </View>
 
-          <MyButton
-            title={'SEND CODE'}
-            onPress={() => {
-              if (!text) {
-                alert('Email is empty!');
-              } else {
-                const url = 'http://192.168.18.32:4000/forgetPassword/userForgetPassword';
-                const options = {
-                  method: 'POST',
-                  headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json;charset=UTF-8',
-                  },
-                  body: JSON.stringify({
-                    email:text
-                  }),
-                };
-                fetch(url, options)
-                  .then(response => response.json())
-                  .then(data => {
-
-                    if(data.status==true){
-                      props.navigation.navigate('VerifyAccount' , {email:"uk5458622@gmail.com"}), setMyfocus('');
-                    }
-                    else{
-                      alert("Could not send OTP to this email")
-                    }
-                    console.log(data);
-
-                  });
-              }
-            }}
-            myStyles={styles.fixedfooter}
-          />
+          <TouchableOpacity
+                  style={styles.btn}
+                  onPress={() => handleSubmit()}>
+                  <Text style={styles.btnText}>Login</Text>
+                </TouchableOpacity>
         </View>
+        <AwesomeAlert
+          show={isAlertVisible}
+          showProgress={progress}
+          title={title}
+          message={message}
+          closeOnTouchOutside={true}
+          closeOnHardwareBackPress={false}
+          showCancelButton={false}
+          showConfirmButton={showConfirmButton}
+          confirmText="OK"
+          confirmButtonColor={confirmButtonColor}
+          onConfirmPressed={hideAlert}
+        />
       </ScrollView>
     </SafeAreaView>
   );
@@ -126,10 +179,20 @@ const ForgotPassword = props => {
 export default ForgotPassword;
 
 const styles = StyleSheet.create({
+  btn: {
+    backgroundColor: '#A1CE69',
+    width: responsiveWidth(87),
+    height : responsiveHeight(7),
+    padding: 15,
+    borderRadius: responsiveWidth(7),
+    alignItems: 'center',
+    marginBottom: responsiveHeight(2),
+    marginTop : 20
+  },
   txt1: {
     marginTop: responsiveHeight(9),
     fontFamily: fontFamily.Calibri_Regular,
-    color: '#00CE30',
+    color: '#8CC63E',
     fontSize: responsiveFontSize(3.9),
   },
   txt2: {
@@ -170,6 +233,7 @@ const styles = StyleSheet.create({
   fixedfooter: {
     marginBottom: responsiveHeight(2.5),
     marginTop: responsiveHeight(7),
+
   },
   forgotview: {
     marginTop: responsiveHeight(2),

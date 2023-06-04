@@ -41,7 +41,11 @@ import {getStatus, login} from '../../api';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchStatus} from '../../redux/slices/device1';
 import {fetchStatus2} from '../../redux/slices/device2';
+<<<<<<< HEAD
 import {fetchTempValues} from '../../redux/slices/temp';
+=======
+import {getCurrentWeather} from '../../api';
+>>>>>>> a9afef248daa237ea0e2dab0d49bebefcc87e54d
 
 const DashBoard = ({navigation, route}) => {
   const [myfocus, setMyfocus] = useState('');
@@ -52,16 +56,63 @@ const DashBoard = ({navigation, route}) => {
   const [humidity, setHumidity] = useState('00.0');
   const [refreshing, setRefreshing] = React.useState(false);
 
+  const [currentTemperature, setcurrentTemperature] = useState();
+
+
+  
+
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
+    fetchTempData()
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
   }, []);
 
   const dispatch = useDispatch();
+<<<<<<< HEAD
   const data = useSelector(store => store.temp);
   console.log(data);
+=======
+
+
+  const fetchTempData= (async ()=>{
+    const temperatureData = await getCurrentWeather(); // Assuming getCurrentWeather returns the temperature data
+        console.log(temperatureData.data.main.temp)
+        let tempinF = temperatureData.data.main.temp;
+        console.log(tempinF)
+        let tempinC = (parseFloat(tempinF)-273.15);
+        console.log(tempinC)
+        tempinC = tempinC.toFixed(1)
+    
+        console.log(tempinC)
+        setcurrentTemperature(tempinC) 
+  })
+
+  //use Effects
+  useEffect(() => {
+    const fetchCurrentWeather = async () => {
+      try {
+        const temperatureData = await getCurrentWeather(); // Assuming getCurrentWeather returns the temperature data
+        console.log(temperatureData.data.main.temp)
+        let tempinF = temperatureData.data.main.temp;
+        let tempinC = (parseFloat(tempinF)-273.15);
+        tempinC = tempinC.toFixed(1)
+    
+        console.log(tempinC)
+        setcurrentTemperature(tempinC)     
+      } catch (error) {
+        console.error('Error fetching current weather:', error);
+      }
+    };
+   
+    
+    fetchCurrentWeather();
+  }, []);
+  
+
+
+>>>>>>> a9afef248daa237ea0e2dab0d49bebefcc87e54d
   useEffect(() => {
     console.log('Hasnat');
     socket.emit('data', 'I am sending data');
@@ -197,7 +248,7 @@ const DashBoard = ({navigation, route}) => {
                 />
                 <Text
                   style={{color: '#000', fontSize: responsiveFontSize(1.7)}}>
-                  Cloudy{'\n'}25 °C
+                  Cloudy{'\n'}{currentTemperature} °C
                 </Text>
 
                 <Text
