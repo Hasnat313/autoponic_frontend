@@ -43,6 +43,16 @@ import {fetchStatus} from '../../redux/slices/device1';
 import {fetchStatus2} from '../../redux/slices/device2';
 
 import {fetchTempValues} from '../../redux/slices/temp';
+import {fetchTempReadingValues} from '../../redux/slices/tempReadings';
+import {fetchHumidityValues} from '../../redux/slices/humidity';
+import {fetchHumidityReadings} from '../../redux/slices/humidityReadings';
+
+import {fetchMoisture} from '../../redux/slices/moisture';
+import {fetchMoistureReadings} from '../../redux/slices/moistureReadings';
+
+
+
+
 
 import {getCurrentWeather} from '../../api';
 
@@ -67,8 +77,27 @@ const DashBoard = ({navigation, route}) => {
 
   const dispatch = useDispatch();
 
-  const data = useSelector(store => store.temp);
-  console.log(data);
+  // const data = useSelector(store => store.temp);
+  // console.log( "this is the " , data);
+
+  // const temperatureReadings = useSelector(store => store.temperatureReadings);
+  // console.log(temperatureReadings);
+
+  // console.log("=======================================================================")
+  // const humidityGraph = useSelector(store => store.humidity);
+  // console.log(humidityGraph);
+
+  // const humidityReadings= useSelector(store => store.humidityReadings);
+  // console.log(humidityReadings);
+
+  
+  console.log("**=======================================================================")
+  const moistureGraph = useSelector(store => store.moisture);
+  console.log("This is mositure graph values " ,moistureGraph);
+  // const moistureReadings= useSelector(store => store.moistureReadings);
+  // console.log(moistureReadings);
+
+
 
   const fetchTempData = async () => {
     const temperatureData = await getCurrentWeather(); // Assuming getCurrentWeather returns the temperature data
@@ -117,6 +146,13 @@ const DashBoard = ({navigation, route}) => {
     dispatch(fetchStatus());
     dispatch(fetchStatus2());
     dispatch(fetchTempValues());
+    dispatch(fetchTempReadingValues());
+    dispatch(fetchHumidityValues());
+    dispatch(fetchHumidityReadings());
+    dispatch(fetchMoisture());
+    dispatch(fetchMoistureReadings())
+    
+
   }, []);
   return (
     <SafeAreaView style={STYLES.container}>
@@ -259,7 +295,7 @@ const DashBoard = ({navigation, route}) => {
               <View style={styles.rowView}>
                 <TouchableOpacity
                   onPress={() =>
-                    navigation.navigate('WeatherScreen', {data: 'device1'})
+                    navigation.navigate('WeatherScreen', {data: 'device1' , type : 'temperature'})
                   }
                   style={styles.card}>
                   <View style={styles.cardContainer}>
@@ -312,7 +348,7 @@ const DashBoard = ({navigation, route}) => {
                 <TouchableOpacity
                   style={styles.card}
                   onPress={() =>
-                    navigation.navigate('WeatherScreen', {data: 'device2'})
+                    navigation.navigate('WeatherScreen', {data: 'device2', type : "humidity"})
                   }>
                   <View style={styles.cardContainer}>
                     <EntypoIcon name="drop" size={40} color="#000000" />
@@ -359,6 +395,7 @@ const DashBoard = ({navigation, route}) => {
                   onPress={() =>
                     navigation.navigate('WeatherScreen', {
                       data: 'device1',
+                      type : 'moisture'
                     })
                   }
                   style={styles.card}>

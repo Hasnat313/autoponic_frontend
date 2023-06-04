@@ -2,7 +2,7 @@
 
 export const BASE_URL = 'https://autoponic.softwisesol.com/';
 
-// export const BASE_URL = 'http://192.168.130.219:3000/';
+// export const BASE_URL = 'http://192.168.20.1:8000/';
 
 // export const BASE_URL = 'http://192.168.100.20:3000/';
 

@@ -2,21 +2,20 @@ import {createSlice} from '@reduxjs/toolkit';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {BASE_URL} from '../../api/BASE_URL';
 import axios from 'axios';
-import {login, updateStatus, getStatus, getTempGraph} from '../../api';
+import {login, updateStatus, getStatus, getMoistureGraph} from '../../api';
 const initialState = {
   status: 'idle',
-  temp: '',
+  moisture: '',
   //   loading: false,
   error: null,
 };
 
-export const fetchTempValues = createAsyncThunk(
-  'temp/fetchValues',
+export const fetchMoisture = createAsyncThunk(
+  'moisture/fetchValues',
   async () => {
     try {
-      const result = await getTempGraph();
-      console.log('dsfdfgvmgsareWJGHD');
-      console.log(result.data);
+        console.log("inside")
+      const result = await getMoistureGraph();
       return result.data.result;
     } catch (error) {
       console.log(error);
@@ -36,24 +35,25 @@ export const fetchTempValues = createAsyncThunk(
 //     } catch (error) {
 //       console.log(error);
 //       alert(error);
-//       throw Error(error);
+//       throw Error(error);import temp from './slices/temp';
+
 //     }
 //   },
 // );
-const tempSlice = createSlice({
+const moistureSlice = createSlice({
   name: 'device1',
   initialState,
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(fetchTempValues.pending, state => {
+      .addCase(fetchMoisture.pending, state => {
         state.status = 'loading';
       })
-      .addCase(fetchTempValues.fulfilled, (state, action) => {
+      .addCase(fetchMoisture.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.temp = action.payload;
+        state.moisture = action.payload;
       })
-      .addCase(fetchTempValues.rejected, (state, action) => {
+      .addCase(fetchMoisture.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });
@@ -71,4 +71,4 @@ const tempSlice = createSlice({
   },
 });
 // export const { getDeviceState } = device1Slice.actions;
-export default tempSlice.reducer;
+export default moistureSlice.reducer;
