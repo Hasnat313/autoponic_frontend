@@ -2,21 +2,24 @@ import {createSlice} from '@reduxjs/toolkit';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {BASE_URL} from '../../api/BASE_URL';
 import axios from 'axios';
-import {login, updateStatus, getStatus, getTempGraph} from '../../api';
+import {login, updateStatus, getStatus, getMoistureReadings} from '../../api';
 const initialState = {
   status: 'idle',
-  temp: '',
+  moistureReadings: '',
+  //   loading: false,
   error: null,
 };
 
-export const fetchTempValues = createAsyncThunk(
-  'temp/fetchValues',
+export const fetchMoistureReadings = createAsyncThunk(
+  'moistureReadings/fetchValues',
   async () => {
     try {
-      const result = await getTempGraph();
+        console.log("inside")
+      const result = await getMoistureReadings();
       console.log('dsfdfgvmgsareWJGHD');
-      console.log(result.data);
-      return result.data.result;
+      console.log("moisture readings",result.data.moisture2)
+      return result.data.moisture2;
+
     } catch (error) {
       console.log(error);
       alert(error?.response?.data?.message);
@@ -35,24 +38,25 @@ export const fetchTempValues = createAsyncThunk(
 //     } catch (error) {
 //       console.log(error);
 //       alert(error);
-//       throw Error(error);
+//       throw Error(error);import temp from './slices/temp';
+
 //     }
 //   },
 // );
-const tempSlice = createSlice({
+const moistureReadingsSlice = createSlice({
   name: 'device1',
   initialState,
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(fetchTempValues.pending, state => {
+      .addCase(fetchMoistureReadings.pending, state => {
         state.status = 'loading';
       })
-      .addCase(fetchTempValues.fulfilled, (state, action) => {
+      .addCase(fetchMoistureReadings.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.temp = action.payload;
+        state.moistureReadings = action.payload;
       })
-      .addCase(fetchTempValues.rejected, (state, action) => {
+      .addCase(fetchMoistureReadings.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });
@@ -70,4 +74,4 @@ const tempSlice = createSlice({
   },
 });
 // export const { getDeviceState } = device1Slice.actions;
-export default tempSlice.reducer;
+export default moistureReadingsSlice.reducer;

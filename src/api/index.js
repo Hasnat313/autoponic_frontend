@@ -17,7 +17,12 @@ export const register = authFormData =>
   API.post('user/register', authFormData, config);
 export const login = authFormData =>
   API.post('user/login', authFormData, config);
-export const getTempValues = () => API.get('temp/getTempReadings', config);
+export const getTempGraph = () => API.get('temp/getTempGraph', config);
+export const getTempReadings = () => API.get('temp/getTempReadings', config);
+export const getHumidityGraph = () => API.get('temp/humidityGraph', config);
+export const getHumidityReadings = () => API.get('temp/getHumidityReadings', config);
+export const getMoistureGraph = () => API.get('temp/getMoistureGraph', config);
+export const getMoistureReadings = () => API.get('temp/getMoistureValue', config);
 export const getStatus = () =>
   API.get('devices/getDeviceById/6472d6332133a2af8e811236', config);
 export const getStatus2 = () =>
