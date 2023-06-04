@@ -17,7 +17,7 @@ export const fetchStatus2 = createAsyncThunk(
       const result = await getStatus2();
       console.log('dsf');
       console.log(result.data);
-      return result.data.result.status;
+      return result?.data?.result?.status;
     } catch (error) {
       console.log(error);
       alert(error?.response?.data?.message);

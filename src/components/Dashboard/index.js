@@ -38,9 +38,10 @@ import Eye from 'react-native-vector-icons/Ionicons';
 
 import {useFormik} from 'formik';
 import {getStatus, login} from '../../api';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {fetchStatus} from '../../redux/slices/device1';
 import {fetchStatus2} from '../../redux/slices/device2';
+import {fetchTempValues} from '../../redux/slices/temp';
 
 const DashBoard = ({navigation, route}) => {
   const [myfocus, setMyfocus] = useState('');
@@ -59,7 +60,8 @@ const DashBoard = ({navigation, route}) => {
   }, []);
 
   const dispatch = useDispatch();
-
+  const data = useSelector(store => store.temp);
+  console.log(data);
   useEffect(() => {
     console.log('Hasnat');
     socket.emit('data', 'I am sending data');
@@ -73,6 +75,7 @@ const DashBoard = ({navigation, route}) => {
     });
     dispatch(fetchStatus());
     dispatch(fetchStatus2());
+    dispatch(fetchTempValues());
   }, []);
   return (
     <SafeAreaView style={STYLES.container}>

@@ -40,6 +40,7 @@ const config = {
 // };
 export const login = authFormData =>
   API.post('user/login', authFormData, config);
+export const getTempValues = () => API.get('temp/getTempReadings', config);
 export const getStatus = () =>
   API.get('devices/getDeviceById/6472d6332133a2af8e811236', config);
 export const getStatus2 = () =>
