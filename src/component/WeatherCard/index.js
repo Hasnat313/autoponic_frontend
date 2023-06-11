@@ -2,7 +2,13 @@ import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-const WeatherCard = ({day, date, temperature}) => {
+
+import Icon from 'react-native-vector-icons/FontAwesome';
+import CloudIcon from 'react-native-vector-icons/Fontisto';
+
+import EntypoIcon from 'react-native-vector-icons/Entypo';
+import MoistureIcon from 'react-native-vector-icons/Entypo';
+const WeatherCard = ({day, date, temperature , icon_name}) => {
   return (
     <View style={styles.card}>
       <View>
@@ -10,7 +16,12 @@ const WeatherCard = ({day, date, temperature}) => {
         <Text style={styles.dateText}>{date}</Text>
       </View>
       <View style={styles.rowView}>
-        <Feather name="sun" size={20} style={styles.icon} />
+        {icon_name == 'temperature' ?  (<Icon name="thermometer" size={20} style={styles.icon} />) :
+         icon_name == 'humidity' ?(<EntypoIcon name="drop" size={20} style={styles.icon} />) : 
+         icon_name == 'moisture' ?(<MoistureIcon name="water" size={20} style={styles.icon} />) : 
+         null
+         }
+        
         <Text style={styles.title}>{temperature}</Text>
       </View>
     </View>

@@ -30,7 +30,7 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 
 import {forgotPassord} from '../../api';
 
-const ForgotPassword = props => {
+const ForgotPassword = ({props , navigation , route}) => {
   const [issecure, setIssecure] = useState(true);
   const [myfocus, setMyfocus] = useState('');
   const [softinput, setSoftinput] = useState(false);
@@ -91,7 +91,7 @@ const ForgotPassword = props => {
             showAlert("Email Send" , "Email is send to your account" , false , '#A1CE69' , false )
             setTimeout(()=>{
               hideAlert();
-              navigation.navigate('VerifyAccount');
+              navigation.navigate('VerifyAccount' , {email : values.email});
             }, 1000);
 
           }
@@ -155,7 +155,7 @@ const ForgotPassword = props => {
           <TouchableOpacity
                   style={styles.btn}
                   onPress={() => handleSubmit()}>
-                  <Text style={styles.btnText}>Login</Text>
+                  <Text style={styles.btnText}>Send email</Text>
                 </TouchableOpacity>
         </View>
         <AwesomeAlert
@@ -194,6 +194,10 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.Calibri_Regular,
     color: '#8CC63E',
     fontSize: responsiveFontSize(3.9),
+  },
+  btnText: {
+    color: '#fff',
+    fontSize: 18,
   },
   txt2: {
     marginTop: responsiveHeight(2.5),

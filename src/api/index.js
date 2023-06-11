@@ -40,3 +40,7 @@ export const getCurrentWeather = () =>
   );
 export const forgotPassord = authFormData =>
   API.post('forgetPassword/userForgetPassword', authFormData, config);
+  export const verifyOTP = authFormData =>
+  API.post('forgetPassword/verifyOTP', authFormData, config);
+  export const updatePassword = authFormData =>
+  API.put('user/updatePassword', authFormData, config);

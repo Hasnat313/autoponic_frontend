@@ -176,6 +176,11 @@ const DashBoard = ({navigation, route}) => {
             // backgroundColor: '#1c744a',
             // alignItems: 'center',
           }}>
+            <Text style ={{
+              position : 'absolute',
+              marginLeft :100
+            }}>Sign out</Text>
+
           <Image
             source={require('../../assets/images/mainscreen/flowers-gd5216de8a_1280.png')}
             style={{
@@ -465,7 +470,6 @@ const DashBoard = ({navigation, route}) => {
                         </Text>
                       </View>
                       <TouchableOpacity
-                        onPress={() => navigation.navigate('Button')}
                         style={styles.cardbtn}>
                         <Text
                           style={{
@@ -487,7 +491,6 @@ const DashBoard = ({navigation, route}) => {
 
               <View style={styles.rowView}>
                 <TouchableOpacity
-                  onPress={() => navigation.navigate('WeatherScreen')}
                   style={styles.card}>
                   <View style={styles.cardContainer}>
                     <Image
@@ -517,7 +520,6 @@ const DashBoard = ({navigation, route}) => {
                         </Text>
                       </View>
                       <TouchableOpacity
-                        onPress={() => navigation.navigate('Button')}
                         style={styles.cardbtn}>
                         <Text
                           style={{
@@ -556,7 +558,6 @@ const DashBoard = ({navigation, route}) => {
                         </Text>
                       </View>
                       <TouchableOpacity
-                        onPress={() => navigation.navigate('Button')}
                         style={styles.cardbtn}>
                         <Text
                           style={{
@@ -574,6 +575,7 @@ const DashBoard = ({navigation, route}) => {
                 </TouchableOpacity>
               </View>
             </ScrollView>
+
           </View>
         </View>
       </ScrollView>

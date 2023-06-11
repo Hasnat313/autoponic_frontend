@@ -25,9 +25,13 @@ import {fontFamily} from '../../constants/fonts';
 import {appImages} from '../../assets/utilities';
 import {MyButton} from '../../component/MyButton';
 import Eye from 'react-native-vector-icons/Ionicons';
+import {updatePassword} from '../../api'
+import AwesomeAlert from 'react-native-awesome-alerts';
 
-const UpdatePassword = props => {
+const UpdatePassword = ({props , route , navigation}) => {
   const [visible, setVisible] = React.useState(false);
+  const [title , setTitle] = useState("");
+  const [message , setMessage] = useState("")
   const confirmref = useRef();
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
@@ -36,12 +40,58 @@ const UpdatePassword = props => {
 
   const [myfocus, setMyfocus] = useState('');
   const [softinput, setSoftinput] = useState(false);
+  const [isAlertVisible, setAlertVisible] = useState(false);
+
+  const [password , setPassword] = useState("")
+  const [confirmPassword , setConfirmPassword] = useState("");
+
+
+  const showAlert = (title , message) => {
+    setTitle(title);
+    setMessage(message)
+    setAlertVisible(true);
+
+  };
+
+  const hideAlert = () => {
+    setAlertVisible(false);
+  };
 
   useFocusEffect(
     React.useCallback(() => {
       setSoftinput(true);
     }, []),
   );
+
+  const handleSubmit=async ()=>{
+
+    console.log(password , confirmPassword)
+    if(password == confirmPassword){
+      console.log("inside")
+      const obj = {
+        email : route.params.email,
+        password : password
+      }
+      console.log(obj)
+      if(obj){
+        const result= await updatePassword(obj);
+        console.log(result)
+  
+        if(result.data.message == "Password has been updated"){
+          showModal();
+        }else{
+          showAlert("Internal Error","Could not update your password due to some internal reason")
+        }
+      }
+    }else{
+      console.log("another inside")
+      showAlert("Invalid Confirm password","Password and confirm password must be same")
+
+    }
+  
+  }
+
+
   return (
     <SafeAreaView style={STYLES.container}>
       <StatusBar
@@ -71,7 +121,7 @@ const UpdatePassword = props => {
         <View style={{alignItems: 'center'}}>
           <Text style={styles.txt1}>Create {'\n'}Strong Password</Text>
           <Text style={styles.txt2}>
-            Lorem ipsum dolor sit amet, consetetur!
+            Set Your new password to Login to your account!
           </Text>
           <View
             style={[
@@ -90,6 +140,8 @@ const UpdatePassword = props => {
               blurOnSubmit={false}
               onSubmitEditing={() => confirmref.current.focus()}
               returnKeyType="next"
+              onChangeText={newPassword => setPassword(newPassword)}
+              value={password}
             />
             <Eye
               color={'#00CE30'}
@@ -114,6 +166,8 @@ const UpdatePassword = props => {
               selectionColor={'#00CE30'}
               onFocus={() => setMyfocus('confirmpassword')}
               onSubmitEditing={() => setMyfocus('')}
+              onChangeText={confirm_password => setConfirmPassword(confirm_password)}
+              value={confirmPassword}
             />
             <Eye
               color={'#00CE30'}
@@ -122,11 +176,12 @@ const UpdatePassword = props => {
               onPress={() => setIsconfirmsecure(!isconfirmsecure)}
             />
           </View>
-          <MyButton
-            title={'UPDATE'}
-            onPress={() => showModal()}
-            myStyles={styles.fixedfooter}
-          />
+          <TouchableOpacity
+                  style={styles.btn}
+                  onPress={() => handleSubmit()}>
+                  <Text style={styles.btnText}>Update</Text>
+                </TouchableOpacity>
+
         </View>
 
         <Modal visible={visible} onDismiss={hideModal}>
@@ -146,15 +201,26 @@ const UpdatePassword = props => {
             />
             <Text style={styles.successtxt}>Success!</Text>
             <Text style={styles.passwordupdatedtxt}>Password Updated</Text>
-            <MyButton
-              title={'GO TO LOGIN'}
-              onPress={() => props.navigation.navigate('Login')}
-              myStyles={{
-                width: responsiveWidth(60),
-              }}
-            />
+            <TouchableOpacity
+                  style={styles.btn2}
+                  onPress={() => navigation.navigate('Login')}>
+                  <Text style={styles.btnText}>Goto Login</Text>
+                </TouchableOpacity>
           </View>
         </Modal>
+        <AwesomeAlert
+          show={isAlertVisible}
+          showProgress={false}
+          title={title}
+          message={message}
+          closeOnTouchOutside={true}
+          closeOnHardwareBackPress={false}
+          showCancelButton={false}
+          showConfirmButton={true}
+          confirmText="OK"
+          confirmButtonColor={'#AA4A44'}
+          onConfirmPressed={hideAlert}
+        />
       </ScrollView>
     </SafeAreaView>
   );
@@ -163,10 +229,38 @@ const UpdatePassword = props => {
 export default UpdatePassword;
 
 const styles = StyleSheet.create({
+  btnText: {
+    color: '#fff',
+    fontSize: 18,
+  },
+  btn: {
+    backgroundColor: '#A1CE69',
+    width: responsiveWidth(87),
+    height : responsiveHeight(7),
+    padding: 15,
+    borderRadius: responsiveWidth(7),
+    alignItems: 'center',
+    marginBottom: responsiveHeight(2),
+    marginTop : 20
+  },
+  btn2: {
+    backgroundColor: '#A1CE69',
+    width: responsiveWidth(60),
+    height : responsiveHeight(7),
+    padding: 15,
+    borderRadius: responsiveWidth(7),
+    alignItems: 'center',
+    marginBottom: responsiveHeight(2),
+    marginTop : 25
+  },
+  btnText: {
+    color: '#fff',
+    fontSize: 18,
+  },
   txt1: {
     marginTop: responsiveHeight(9),
     fontFamily: fontFamily.Calibri_Regular,
-    color: '#3B3E51',
+    color: '#8CC63E',
     fontSize: responsiveFontSize(3.9),
     width: responsiveWidth(85),
     textAlign: 'center',

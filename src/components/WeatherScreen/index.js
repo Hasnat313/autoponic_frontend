@@ -8,28 +8,44 @@ import {
   ScrollView,
   ActivityIndicator
 } from 'react-native';
+import socket from '../../socket';
+import {format} from 'date-fns';
+
+import Icon from 'react-native-vector-icons/FontAwesome';
+import CloudIcon from 'react-native-vector-icons/Fontisto';
+
+import EntypoIcon from 'react-native-vector-icons/Entypo';
+import MoistureIcon from 'react-native-vector-icons/Entypo';
+
+
 import React from 'react';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import WeatherCard from '../../component/WeatherCard';
 import {useSelector} from 'react-redux';
 import { useState , useEffect } from 'react';
+import { responsiveHeight } from 'react-native-responsive-dimensions';
 const WeatherScreen = ({navigation, route}) => {
   const [refreshing, setRefreshing] = React.useState(false);
   const [type, setType] = React.useState(route.params.type);
+  const [temperature, setTemperature] = useState('00.0');
+
 
   let temp= useSelector (store => store.temperatureReadings);
   let humid= useSelector (store => store.humidityReadings);
   let moisture = useSelector (store => store.moistureReadings);
 
 
-
-
-
   React.useEffect(() => {
     setType(route.params.type);
   }, [route.params.type]);
 
+
+  const date = new Date(Date.now()).toLocaleString();
+
+  
+  
+  
   console.log('====================================');
   console.log(route.params.data);
   console.log(route.params.type);
@@ -57,6 +73,13 @@ const WeatherScreen = ({navigation, route}) => {
   
   
   useEffect(() => {
+
+    socket.on('temp', data => {
+      console.log(data);
+      setTemperature(data);
+    });
+
+
     if(type== 'temperature'){
       label = 'Temperature'
     // if(status == 'loading'){
@@ -114,24 +137,28 @@ const WeatherScreen = ({navigation, route}) => {
             justifyContent: 'center',
           }}>
           <Text style={{color: '#fff', fontSize: 16, fontWeight: '400'}}>
-            Sat,Aug 29th 2023
+            {format(new Date(), "E , MMM dd yyyy")}
           </Text>
           <View
             style={{
               flexDirection: 'row',
               alignItems: 'center',
+              justifyContent : 'center',
               marginVertical: 20,
             }}>
-            <FontAwesome5 name="cloud-sun-rain" color={'#ffffff'} size={50} />
-            <Text style={{color: '#fff', fontSize: 32, fontWeight: '600'}}>
-              {' '}
-              32°C
+                <Icon
+                      name="thermometer"
+                      size={36}
+                      color="#ffffff"
+                      style={{
+                        width: 40,
+                        height: 50,
+                      }}
+                    />
+            <Text style={{color: '#fff', fontSize: 32, fontWeight: '600' , marginBottom : responsiveHeight(1.4)}}>
+              {temperature}°C
             </Text>
           </View>
-          <Text style={{color: '#fff', fontSize: 14, letterSpacing: 1}}>
-            {' '}
-            Partly Cloudy
-          </Text>
           <View
             style={{
               display: 'flex',
@@ -205,15 +232,17 @@ const WeatherScreen = ({navigation, route}) => {
 
               const date = new Date(item.createdAt).toLocaleString(undefined, options);
               let label ;
-              if(type== 'temperature'){label = "°C"}
-              if(type == 'humidity'){label = 'gm/3'}
-              if(type == 'moisture'){label = 'm3m-3'}
+              let icon_name;
+              if(type== 'temperature'){label = "°C"; icon_name = 'temperature'}
+              if(type == 'humidity'){label = 'gm/3' ; icon_name = 'humidity'}
+              if(type == 'moisture'){label = 'wfv ' ; icon_name = 'moisture'}
 
                 return (
                 <WeatherCard
                   day={date.split(' ')[0]} // Extracting only the day portion
                   date={date}
                   temperature={item.value+" "+label}
+                  icon_name={icon_name}
                 />
               );
             }}
