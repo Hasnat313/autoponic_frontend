@@ -44,7 +44,7 @@ function App() {
       const user = await AsyncStorage.getItem('user');
       console.log(user.email);
       if (user) {
-        setIsLoggedIn(false);
+        setIsLoggedIn(true);
       } else {
         // User is not logged in
         setIsLoggedIn(false);
@@ -63,8 +63,8 @@ function App() {
           {isLoggedIn ? (
             <>
               <Stack.Screen
-                name="Chart"
-                component={Chart}
+                name="Signup"
+                component={Signup}
                 options={{headerShown: false}}
               />
               <Stack.Screen

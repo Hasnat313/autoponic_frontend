@@ -59,6 +59,7 @@ const DashBoard = ({navigation, route}) => {
   const refpassword = useRef();
   const [temperature, setTemperature] = useState('00.0');
   const [humidity, setHumidity] = useState('00.0');
+  const [moisture, setMoisture] = useState('00.0');
   const [refreshing, setRefreshing] = React.useState(false);
 
   const [currentTemperature, setcurrentTemperature] = useState();
@@ -137,6 +138,10 @@ const DashBoard = ({navigation, route}) => {
     socket.on('humd', data => {
       console.log(data);
       setHumidity(data);
+    });
+    socket.on('moist', data => {
+      console.log(data);
+      setMoisture(data);
     });
     dispatch(fetchStatus());
     dispatch(fetchStatus2());
@@ -345,7 +350,6 @@ const DashBoard = ({navigation, route}) => {
                   style={styles.card}
                   onPress={() =>
                     navigation.navigate('WeatherScreen', {
-                      data: 'device2',
                       type: 'humidity',
                     })
                   }>
@@ -393,7 +397,7 @@ const DashBoard = ({navigation, route}) => {
                 <TouchableOpacity
                   onPress={() =>
                     navigation.navigate('WeatherScreen', {
-                      data: 'device1',
+                      data: 'device2',
                       type: 'moisture',
                     })
                   }
@@ -416,7 +420,7 @@ const DashBoard = ({navigation, route}) => {
                             fontSize: responsiveFontSize(1.7),
                             fontWeight: '500',
                           }}>
-                          m3m-3
+                          {moisture} m3m-3
                         </Text>
                       </View>
                       <TouchableOpacity

@@ -1,3 +1,4 @@
 import {io} from 'socket.io-client';
-const socket = io('http://192.168.100.22:3000');
+import {BASE_URL} from './api/BASE_URL';
+const socket = io(BASE_URL);
 export default socket;

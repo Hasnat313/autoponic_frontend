@@ -281,7 +281,7 @@ const Button = ({navigation, route}) => {
               fontWeight: '500',
               letterSpacing: 1,
             }}>
-            Light
+            {deviceStatus?.nameInProject}
           </Text>
         </View>
       </View>
