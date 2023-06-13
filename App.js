@@ -63,8 +63,13 @@ function App() {
           {isLoggedIn ? (
             <>
               <Stack.Screen
-                name="Signup"
-                component={Signup}
+                name="Dashboard"
+                component={Dashboard}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="Chart"
+                component={Chart}
                 options={{headerShown: false}}
               />
               <Stack.Screen
@@ -81,11 +86,6 @@ function App() {
           ) : (
             <>
               <Stack.Screen
-                name="Dashboard"
-                component={Dashboard}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
                 name="Splash"
                 component={Splash}
                 options={{headerShown: false}}
@@ -95,11 +95,11 @@ function App() {
                 component={Login}
                 options={{headerShown: false}}
               />
-              {/* <Stack.Screen
+              <Stack.Screen
                 name="Dashboard"
                 component={Dashboard}
                 options={{headerShown: false}}
-              /> */}
+              />
               <Stack.Screen
                 name="Chart"
                 component={Chart}

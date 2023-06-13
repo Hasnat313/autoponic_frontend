@@ -30,8 +30,12 @@ import {
   useBlurOnFulfill,
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
+import {verifyOTP} from '../../api';
+
+
+
 const CELL_COUNT = 4;
-const VerifyAccount = (props) => {
+const VerifyAccount = ({props , navigation , route}) => {
   const [visible, setVisible] = React.useState(false);
 
   const showModal = () => setVisible(true);
@@ -40,6 +44,8 @@ const VerifyAccount = (props) => {
   const [myfocus, setMyfocus] = useState('');
   const [softinput, setSoftinput] = useState(false);
   const [value, setValue] = useState('');
+
+
 
   const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
   const [props2, getCellOnLayoutHandler] = useClearByFocusCell({
@@ -51,6 +57,25 @@ const VerifyAccount = (props) => {
       setSoftinput(true);
     }, []),
   );
+
+  const handleSubmit=async ()=>{
+    console.log(value)
+    const values = {
+      email : route.params.email,
+      userEnteredOtp : value
+    }
+    console.log(values)
+    if(value){
+      
+      const result= await verifyOTP(values);
+
+      if(result.data.verified == true){
+        showModal();
+      }else{
+        alert("Wrong OTP")
+      }
+    }
+  }
   return (
     <SafeAreaView style={STYLES.container}>
       <StatusBar
@@ -59,15 +84,7 @@ const VerifyAccount = (props) => {
         backgroundColor={'transparent'}
         translucent={true}
       />
-      <Image
-        source={require('../../../new.jpg')}
-        style={{
-          width: responsiveWidth(100),
-          height: responsiveHeight(100),
-          position: 'absolute',
-        }}
-        resizeMode="cover"
-      />
+  
 
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -80,7 +97,7 @@ const VerifyAccount = (props) => {
         <View style={{alignItems: 'center'}}>
           <Text style={styles.txt1}>Verify Account</Text>
           <Text style={styles.txt2}>
-            {props.route.params.email}
+            {route.params.email}
           </Text>
           <CodeField
             ref={ref}
@@ -101,47 +118,11 @@ const VerifyAccount = (props) => {
               </View>
             )}
           />
-          <MyButton
-            title={'VERIFY'}
-            myStyles={styles.fixedfooter}
-            onPress={() => {
-              console.log(value)
-              console.log(props.route.params.email)
-              if (!value){
-                alert('Empty')
-              }
-              else{
-                const url = 'http://192.168.18.32:4000/forgetPassword/verifyOTP';
-                const options = {
-                  method: 'POST',
-                  headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json;charset=UTF-8',
-                  },
-                  body: JSON.stringify({
-                    email:props.route.params.email,
-                    userEnteredOtp:value
-
-                  }),
-                };
-                 fetch(url, options)
-                  .then(response => response.json())
-                  .then(data => {
-                    console.log(data.verified);
-                    if(data.verified===true){
-                      showModal()
-                    }
-                    else if(data.verified===false){
-                      alert("Could not match OTP")
-                    }
-
-                    
-
-                  });
-              }
-
-            }}
-          />
+        <TouchableOpacity
+                  style={styles.btn}
+                  onPress={() => handleSubmit()}>
+                  <Text style={styles.btnText}>Verify</Text>
+                </TouchableOpacity>
         </View>
 
         
@@ -162,15 +143,11 @@ const VerifyAccount = (props) => {
             />
             <Text style={styles.successtxt}>Success!</Text>
             <Text style={styles.passwordupdatedtxt}>Account Verified</Text>
-            <MyButton
-              title={'Update Password'}
-              myStyles={{
-                width: responsiveWidth(60),
-              }}
-              onPress={() =>
-                props.navigation.navigate('UpdatePassword')
-              }
-            />
+            <TouchableOpacity
+                  style={styles.btn2}
+                  onPress={() => navigation.navigate('UpdatePassword' , {email : route.params.email})}>
+                  <Text style={styles.btnText}>Update Password</Text>
+                </TouchableOpacity>
           </View>
         </Modal>
       </ScrollView>
@@ -183,8 +160,7 @@ export default VerifyAccount;
 const styles = StyleSheet.create({
   txt1: {
     marginTop: responsiveHeight(9),
-    fontFamily: fontFamily.Calibri_Regular,
-    color: '#00CE30',
+    color: '#8CC63E',
     fontSize: responsiveFontSize(3.9),
   },
   txt2: {
@@ -222,9 +198,29 @@ const styles = StyleSheet.create({
     paddingLeft: responsiveWidth(5),
     marginRight: responsiveWidth(2),
   },
-  fixedfooter: {
-    marginBottom: responsiveHeight(2.5),
-    marginTop: responsiveHeight(7),
+  btnText: {
+    color: '#fff',
+    fontSize: 18,
+  },
+  btn: {
+    backgroundColor: '#A1CE69',
+    width: responsiveWidth(87),
+    height : responsiveHeight(7),
+    padding: 15,
+    borderRadius: responsiveWidth(7),
+    alignItems: 'center',
+    marginBottom: responsiveHeight(2),
+    marginTop : 20
+  },
+  btn2: {
+    backgroundColor: '#A1CE69',
+    width: responsiveWidth(60),
+    height : responsiveHeight(7),
+    padding: 15,
+    borderRadius: responsiveWidth(7),
+    alignItems: 'center',
+    marginBottom: responsiveHeight(2),
+    marginTop : 25
   },
   forgotview: {
     marginTop: responsiveHeight(2),
