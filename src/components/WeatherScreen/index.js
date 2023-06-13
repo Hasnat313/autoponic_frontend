@@ -69,9 +69,22 @@ const WeatherScreen = ({navigation, route}) => {
   useEffect(() => {
     socket.on('temp', data => {
       console.log(data);
-      setTemperature(data);
+      if (type == 'temperature') {
+        setTemperature(data);
+      }
     });
-
+    socket.on('humd', data => {
+      console.log(data);
+      if (type == 'humidity') {
+        setTemperature(data);
+      }
+    });
+    socket.on('moist', data => {
+      console.log(data);
+      if (type == 'moisture') {
+        setTemperature(data);
+      }
+    });
     if (type == 'temperature') {
       label = 'Temperature';
       // if(status == 'loading'){
@@ -127,15 +140,32 @@ const WeatherScreen = ({navigation, route}) => {
                 justifyContent: 'center',
                 marginVertical: 20,
               }}>
-              <Icon
-                name="thermometer"
-                size={36}
-                color="#ffffff"
-                style={{
-                  width: 40,
-                  height: 50,
-                }}
-              />
+              {route.params.type == 'temperature' ? (
+                <Icon
+                  name="thermometer"
+                  size={36}
+                  color="#ffffff"
+                  style={{
+                    width: 40,
+                    height: 50,
+                  }}
+                />
+              ) : route.params.type == 'moisture' ? (
+                <EntypoIcon
+                  name="water"
+                  color="#ffffff"
+                  size={36}
+                  style={{width: 40, height: 50}}
+                />
+              ) : (
+                <MoistureIcon
+                  name="drop"
+                  color="#ffffff"
+                  size={36}
+                  style={{width: 40, height: 50}}
+                />
+              )}
+
               <Text
                 style={{
                   color: '#fff',
@@ -162,10 +192,12 @@ const WeatherScreen = ({navigation, route}) => {
                   width: 130,
                   marginVertical: 10,
                   marginEnd: 15,
+
                   // marginBottom:10,
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
+                disabled={route.params.type == 'humidity' && true}
                 onPress={() =>
                   navigation.navigate('Button', {
                     paramKey: route.params.data,

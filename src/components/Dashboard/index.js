@@ -181,10 +181,13 @@ const DashBoard = ({navigation, route}) => {
             // backgroundColor: '#1c744a',
             // alignItems: 'center',
           }}>
-            <Text style ={{
-              position : 'absolute',
-              marginLeft :100
-            }}>Sign out</Text>
+          <Text
+            style={{
+              position: 'absolute',
+              marginLeft: 100,
+            }}>
+            Sign out
+          </Text>
 
           <Image
             source={require('../../assets/images/mainscreen/flowers-gd5216de8a_1280.png')}
@@ -320,7 +323,8 @@ const DashBoard = ({navigation, route}) => {
                         <Text
                           style={{
                             color: '#000',
-                            fontSize: responsiveFontSize(1.7),
+                            marginLeft: '-25%',
+                            fontSize: responsiveFontSize(1.6),
                             fontWeight: '500',
                           }}>
                           Temperature
@@ -367,6 +371,7 @@ const DashBoard = ({navigation, route}) => {
                           style={{
                             color: '#000',
                             fontSize: responsiveFontSize(1.8),
+
                             fontWeight: '500',
                           }}>
                           Humidity
@@ -473,8 +478,7 @@ const DashBoard = ({navigation, route}) => {
                           {humidity} gm/3
                         </Text>
                       </View>
-                      <TouchableOpacity
-                        style={styles.cardbtn}>
+                      <TouchableOpacity style={styles.cardbtn}>
                         <Text
                           style={{
                             color: '#ffff',
@@ -494,8 +498,7 @@ const DashBoard = ({navigation, route}) => {
               {/* ---------------------- */}
 
               <View style={styles.rowView}>
-                <TouchableOpacity
-                  style={styles.card}>
+                <TouchableOpacity style={styles.card}>
                   <View style={styles.cardContainer}>
                     <Image
                       source={require('../../assets/images/water-level.png')}
@@ -520,11 +523,10 @@ const DashBoard = ({navigation, route}) => {
                             fontSize: responsiveFontSize(1.7),
                             fontWeight: '500',
                           }}>
-                          m3m-3
+                          0.00 m3m-3
                         </Text>
                       </View>
-                      <TouchableOpacity
-                        style={styles.cardbtn}>
+                      <TouchableOpacity style={styles.cardbtn}>
                         <Text
                           style={{
                             color: '#ffff',
@@ -561,8 +563,7 @@ const DashBoard = ({navigation, route}) => {
                           {humidity} gm/3
                         </Text>
                       </View>
-                      <TouchableOpacity
-                        style={styles.cardbtn}>
+                      <TouchableOpacity style={styles.cardbtn}>
                         <Text
                           style={{
                             color: '#ffff',
@@ -579,7 +580,6 @@ const DashBoard = ({navigation, route}) => {
                 </TouchableOpacity>
               </View>
             </ScrollView>
-
           </View>
         </View>
       </ScrollView>
