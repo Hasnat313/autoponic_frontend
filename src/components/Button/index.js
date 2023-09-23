@@ -26,14 +26,14 @@ const Button = ({navigation, route}) => {
   const {deviceStatus, status} = useSelector(store =>
     route.params.paramKey === 'device1' ? store.device1 : store.device2,
   );
-  let modifiedDeviceStatus = deviceStatus.status;
+  let modifiedDeviceStatus = deviceStatus?.status;
   console.log('hasnatchecking status', deviceStatus);
   // const [isEnabled, setIsEnable] = useState(
   //   deviceStatus?.automatic === '1' ? true : false,
   // );
-  console.log(route.params.paramKey);
+  console.log(route?.params?.paramKey);
   const toggleSwitch = () => {
-    console.log(deviceStatus.automatic);
+    console.log(deviceStatus?.automatic);
 
     // setIsEnable(previousState => !previousState);
   };
@@ -204,7 +204,7 @@ const Button = ({navigation, route}) => {
               onValueChange={() => {
                 dispatch(
                   changeAutomatic2({
-                    status: deviceStatus.automatic === '1' ? '0' : '1',
+                    status: deviceStatus?.automatic === '1' ? '0' : '1',
                   }),
                 );
               }}

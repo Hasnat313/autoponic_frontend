@@ -29,7 +29,7 @@ export const getStatus2 = () =>
   API.get('devices/getDeviceById/6472d6422133a2af8e811239', config);
 
 export const updateStatus = body =>
-  API.put('devices/changeStatus/6472d6332133a2af8e811236', body, config);
+  API.put('devices/changeStatus/64e1e943549f26ba7420d87d', body, config);
 export const updateStatus2 = body =>
   API.put('devices/changeStatus/6472d6422133a2af8e811239', body, config);
 export const changeAutomaticDevice2 = body =>
